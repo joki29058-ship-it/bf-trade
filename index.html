@@ -2,162 +2,172 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BF Полный Маркет 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BF Trade Market 2026</title>
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-        body { background-color: #121214; color: #ffffff; padding: 15px; }
-        .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #121214; color: #ffffff; padding: 12px; }
+        .container { max-width: 850px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
         
-        .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; width: 100%; }
-        h1 { color: #00e676; font-size: 24px; text-align: center; margin-bottom: 5px; }
-        h2 { font-size: 15px; color: #aaa; margin-bottom: 15px; text-align: center; }
+        /* ОГРОМНЫЕ НЕЗАВИСИМЫЕ КНОПКИ ВКЛАДОК */
+        .tabs-menu { display: flex; gap: 12px; width: 100%; margin-bottom: 5px; }
+        .tab-button { 
+            flex: 1; 
+            background-color: #2a2a32; 
+            color: #ffffff; 
+            padding: 18px; 
+            border-radius: 10px; 
+            text-align: center; 
+            font-size: 16px; 
+            font-weight: bold; 
+            border: 2px solid #444; 
+            cursor: pointer;
+            user-select: none;
+        }
+        .tab-button.active { background-color: #00e676; color: #000000; border-color: #00e676; }
 
-        .info-inputs { display: flex; gap: 10px; margin-bottom: 15px; }
-        .input-group { flex: 1; display: flex; flex-direction: column; gap: 5px; }
-        input[type="text"] { background: #2a2a32; color: #fff; border: 1px solid #444; padding: 12px; border-radius: 6px; font-size: 15px; outline: none; width: 100%; }
-
-        .trade-zone { display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; }
-        .trade-side { background: #16161a; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
-        .trade-side.give { border: 2px solid #ff5252; }
-        .trade-side.get { border: 2px solid #00e676; }
+        .card { background: #1a1a1e; border: 2px solid #2d2d34; border-radius: 12px; padding: 15px; width: 100%; }
         
-        .slot-row { display: flex; align-items: center; gap: 10px; background: #222227; padding: 8px; border-radius: 8px; }
-        .slot-row span { font-size: 13px; color: #888; font-weight: bold; width: 60px; }
+        .inputs-row { display: flex; gap: 12px; margin-bottom: 15px; width: 100%; }
+        .input-box { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+        label { font-size: 13px; color: #ccc; font-weight: bold; }
+        input[type="text"], input[type="number"] { background: #2a2a32; color: #fff; border: 2px solid #444; padding: 14px; border-radius: 8px; font-size: 15px; outline: none; width: 100%; }
+
+        .trade-zone { display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; width: 100%; }
+        .trade-block { background: #16161a; padding: 15px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px; }
+        .trade-block.give { border: 2px solid #ff5252; }
+        .trade-block.get { border: 2px solid #00e676; }
+        h3 { font-size: 14px; text-align: center; font-weight: bold; text-transform: uppercase; }
         
-        /* ВЫПАДАЮЩИЙ СПИСОК ПРЕДМЕТОВ */
-        .slot-row select { background: #2a2a32; color: #fff; border: 1px solid #555; padding: 12px; border-radius: 6px; font-size: 15px; outline: none; flex: 1; cursor: pointer; display: block !important; }
+        /* СЛОТЫ ДЛЯ ТАПОВ */
+        .slot-line { display: flex; align-items: center; gap: 10px; background: #222227; padding: 8px 12px; border-radius: 8px; border: 1px solid #333; width: 100%; }
+        .slot-line span { font-size: 13px; color: #888; font-weight: bold; width: 60px; }
+        .slot-line select { background: #2a2a32; color: #fff; border: 2px solid #555; padding: 12px; border-radius: 6px; font-size: 15px; outline: none; flex: 1; cursor: pointer; display: block !important; }
 
-        .publish-btn { background: #00e676; color: #000; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 8px; text-align: center; cursor: pointer; width: 100%; margin-top: 10px; border: none; display: block; user-select: none; }
-        .trade-action-btn { background: #ff9100; color: #000; padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
+        /* ВЕЛИКАЯ КНОПКА ПУБЛИКАЦИИ */
+        .big-action-btn { 
+            background-color: #00e676; 
+            color: #000000; 
+            padding: 20px; 
+            font-size: 18px; 
+            font-weight: bold; 
+            border-radius: 10px; 
+            text-align: center; 
+            cursor: pointer; 
+            width: 100%;
+            user-select: none;
+            margin-top: 5px;
+            box-shadow: 0 5px 15px rgba(0,230,118,0.3);
+        }
+        .big-action-btn:active { background-color: #00c864; }
+        
+        .section-view { display: none; width: 100%; }
+        .section-view.active { display: block; }
+        
+        .market-card { background: #222227; border-left: 5px solid #00e676; padding: 15px; border-radius: 8px; margin-bottom: 12px; width: 100%; }
+        .market-card-header { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 8px; color: #aaa; }
+        .market-card-content { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+        .item-text-line { margin: 5px 0; font-size: 15px; }
+        
+        .orange-trade-btn { background: #ff9100; color: #000; padding: 12px 25px; font-size: 15px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; }
+        
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 9999; }
+        .modal-body { background: #1a1a1e; border: 2px solid #2d2d34; padding: 25px; border-radius: 12px; width: 90%; max-width: 450px; display: flex; flex-direction: column; gap: 15px; }
 
-        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; min-height: 350px; display: flex; flex-direction: column; gap: 12px; }
-        .market-item { background: #222227; border-left: 4px solid #ff5252; padding: 12px; border-radius: 8px; margin-bottom: 5px; }
-        .market-header { display: flex; justify-content: space-between; font-size: 13px; color: #aaa; margin-bottom: 6px; border-bottom: 1px solid #333; padding-bottom: 4px; }
-        .market-content { display: flex; justify-content: space-between; align-items: center; }
-        .fruits-line { margin: 3px 0; font-size: 14px; }
-
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 999; }
-        .modal-content { background: #1a1a1e; border: 1px solid #2d2d34; padding: 25px; border-radius: 12px; width: 95%; max-width: 450px; display: flex; flex-direction: column; gap: 15px; }
+        .sms-box { background: #1a1a1e; border: 2px solid #2d2d34; border-radius: 12px; padding: 15px; height: 450px; display: flex; flex-direction: column; width: 100%; }
+        .sms-feed { flex: 1; overflow-y: auto; }
+        .sms-card-item { background: #2a2a32; padding: 14px; border-radius: 8px; margin-bottom: 10px; font-size: 14px; border-left: 4px solid #00b0ff; line-height: 1.5; }
     </style>
 </head>
 <body>
 
 <div class="container">
     
-    <div class="card">
-        <h1>BF Fruit & Gamepass Market</h1>
-        <h2>Выберите предметы, введите ник и нажмите кнопку публикации ниже!</h2>
-        
-        <form action="#sms-section" method="GET" onsubmit="return saveTradeManual()">
-            <div class="info-inputs">
-                <div class="input-group">
+    <!-- КНОПКИ ПЕРЕМИКАННЯ ВКЛАДОК -->
+    <div class="tabs-menu">
+        <div class="tab-button active" id="btn-tab-market" onclick="changeTab('market')">🛒 Рынок Предложений</div>
+        <div class="tab-button" id="btn-tab-sms" onclick="changeTab('sms')">💬 Мои СМС / Чаты</div>
+    </div>
+
+    <!-- ЕКРАН 1: РИНОК -->
+    <div id="view-market" class="section-view active">
+        <div class="card">
+            <div class="inputs-row">
+                <div class="input-box">
                     <label>Ваш никнейм в Roblox:</label>
-                    <input type="text" id="roblox-nick" placeholder="Например, Pro_Gamer2026">
+                    <input type="text" id="input-nick" placeholder="Например, Pro_Trader">
                 </div>
-                <div class="input-group">
+                <div class="input-box">
                     <label>Когда вы свободны для обмена?</label>
-                    <input type="text" id="online-time" placeholder="Например: Сейчас в игре">
+                    <input type="text" id="input-time" placeholder="Например: Сейчас в онлайн">
                 </div>
             </div>
 
             <div class="trade-zone">
-                <!-- СЛОТЫ ОТДАЮ -->
-                <div class="trade-side give">
-                    <h3 style="color: #ff5252; margin-bottom:5px; font-size: 14px; text-align: center;">Я ОТДАЮ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><select id="give-1"></select></div>
-                    <div class="slot-row"><span>Слот 2</span><select id="give-2"></select></div>
-                    <div class="slot-row"><span>Слот 3</span><select id="give-3"></select></div>
-                    <div class="slot-row"><span>Слот 4</span><select id="give-4"></select></div>
+                <!-- СЛОТИ ВІДДАЮ -->
+                <div class="trade-block give">
+                    <h3 style="color: #ff5252;">Я ВІДДАЮ:</h3>
+                    <div class="slot-line"><span>Слот 1</span><select id="give-slot-1"></select></div>
+                    <div class="slot-line"><span>Слот 2</span><select id="give-slot-2"></select></div>
+                    <div class="slot-line"><span>Слот 3</span><select id="give-slot-3"></select></div>
+                    <div class="slot-line"><span>Слот 4</span><select id="give-slot-4"></select></div>
                 </div>
 
                 <!-- СЛОТЫ ХОЧУ -->
-                <div class="trade-side get">
-                    <h3 style="color: #00e676; margin-bottom:5px; font-size: 14px; text-align: center;">Я ХОЧУ ПОЛУЧИТЬ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><select id="get-1"></select></div>
-                    <div class="slot-row"><span>Слот 2</span><select id="get-2"></select></div>
-                    <div class="slot-row"><span>Слот 3</span><select id="get-3"></select></div>
-                    <div class="slot-row"><span>Слот 4</span><select id="get-4"></select></div>
+                <div class="trade-block get">
+                    <h3 style="color: #00e676;">Я ХОЧУ ПОЛУЧИТЬ:</h3>
+                    <div class="slot-line"><span>Слот 1</span><select id="get-slot-1"></select></div>
+                    <div class="slot-line"><span>Слот 2</span><select id="get-slot-2"></select></div>
+                    <div class="slot-line"><span>Слот 3</span><select id="get-slot-3"></select></div>
+                    <div class="slot-line"><span>Слот 4</span><select id="get-slot-4"></select></div>
                 </div>
             </div>
-            
-            <button type="submit" class="publish-btn">Опубликовать предложение на рынок</button>
-        </form>
+                
+            <div class="big-action-btn" onclick="publishNewOffer()">Опубликовать на рынок</div>
+        </div>
+
+        <div class="card" style="margin-top: 15px;">
+            <h2>Активные объявления на рынке</h2>
+            <div id="market-offers-list"></div>
+        </div>
     </div>
 
-    <!-- ТАБЛИЦА ОБЪЯВЛЕНИЙ -->
-    <div class="chat-container" id="sms-section">
-        <h2 style="color: #00e676; text-align: left; font-size: 17px;">🛒 Активные предложения на рынке и отзывы:</h2>
-        <div id="market-list"></div>
+    <!-- ЕКРАН 2: СМС -->
+    <div id="view-sms" class="section-view">
+        <div class="sms-box">
+            <h2>Входящие СМС-предложения от покупателей</h2>
+            <div class="sms-feed" id="sms-offers-list"></div>
+        </div>
     </div>
 </div>
 
-<div class="modal" id="trade-modal">
-    <div class="modal-content">
-        <h3>🤝 Оформить ответный Трейд</h3>
-        <p id="modal-seller-info" style="color: #aaa; font-size:14px; margin-bottom: 5px;"></p>
-        <div class="input-group"><label>Ваш отзыв или предложение:</label><input type="text" id="buyer-note" placeholder="Например: Готов обменять!"></div>
-        <div class="input-group"><label>Какую выручку перечислить ($):</label><input type="number" id="buyer-cash" placeholder="Сумма"></div>
-        <div style="display: flex; gap: 10px; margin-top: 10px;">
-            <button class="publish-btn" style="background: #ff9100; margin: 0; flex: 1; padding: 12px;" onclick="submitBuyerTradeHTML()">Отправить ответ</button>
-            <button class="publish-btn" style="background: #444; color: #fff; margin: 0; flex: 1; padding: 12px;" onclick="closeModal()">Отмена</button>
+<!-- МОДАЛЬНЕ ВІКНО -->
+<div class="modal-overlay" id="popup-trade">
+    <div class="modal-body">
+        <h3 style="color: #ff9100; font-size: 18px;">🤝 Оформить ответный Трейд</h3>
+        <p id="popup-seller" style="font-size: 14px; color: #aaa;"></p>
+        <div class="input-box"><label>Ваше Письмо продавцу:</label><input type="text" id="popup-note" placeholder="Например: Готов обменять!"></div>
+        <div class="input-box"><label>Какую выручку получит продавец ($):</label><input type="number" id="popup-cash" placeholder="Сумма сделки"></div>
+        <div style="display: flex; gap: 12px; margin-top: 5px;">
+            <div class="big-action-btn" style="background-color: #ff9100; margin: 0; flex: 1; padding: 14px; font-size: 15px;" onclick="sendBuyerTrade()">Отправить</div>
+            <div class="big-action-btn" style="background-color: #444; color: #fff; margin: 0; flex: 1; padding: 14px; font-size: 15px;" onclick="closeTradeModal()">Отмена</div>
         </div>
     </div>
 </div>
 
 <script>
-    // АБСОЛЮТНО ВСЕ ПРЕДМЕТЫ ИЗ BLOX FRUITS НА 2026 ГОД [1.1]
-    const fullItemsListHTML = `
-        <option value="">[Пустой Слот]</option>
-        <optgroup label="⚡ ВСЕ ГЕЙМПАСЫ (GAMEPASSES)">
-            <option value="Dark Blade 🗡️">Dark Blade 🗡️</option>
-            <option value="Fruit Notifier 🚨">Fruit Notifier 🚨</option>
-            <option value="2x Money 💰">2x Money 💰</option>
-            <option value="2x Mastery ✨">2x Mastery ✨</option>
-            <option value="2x Drop Chance 🍀">2x Drop Chance 🍀</option>
-            <option value="Fast Boats 🛥️">Fast Boats 🛥️</option>
-            <option value="+1 Fruit Storage 📦">+1 Fruit Storage 📦</option>
-        </optgroup>
-        <optgroup label="💎 ПОСТОЯННЫЕ ФРУКТЫ (PERMANENT)">
-            <option value="Perm Kitsune 💎">Perm Kitsune 💎</option>
-            <option value="Perm Dragon 💎">Perm Dragon 💎</option>
-            <option value="Perm Leopard 💎">Perm Leopard 💎</option>
-            <option value="Perm Yeti 💎">Perm Yeti 💎</option>
-            <option value="Perm Dough 💎">Perm Dough 💎</option>
-            <option value="Perm T-Rex 💎">Perm T-Rex 💎</option>
-            <option value="Perm Portal 💎">Perm Portal 💎</option>
+    // АБСОЛЮТНО ВСЕ ФРУКТЫ И ГЕЙМПАСЫ ИЗ BLOX FRUITS НА 2026 ГОД [1.1]
+    const fruitsDropdownHTML = `
+        <option value="">[Пусто]</option>
+        <optgroup label="⚡ ГЕЙМПАСЫ ТА ПЕРМИ">
+            <option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="Fruit Notifier 🚨">Fruit Notifier 🚨</option>
+            <option value="2x Money 💰">2x Money 💰</option><option value="2x Mastery ✨">2x Mastery ✨</option>
+            <option value="2x Drop Chance 🍀">2x Drop Chance 🍀</option><option value="Fast Boats 🛥️">Fast Boats 🛥️</option>
+            <option value="+1 Storage 📦">+1 Storage 📦</option><option value="Perm Kitsune 💎">Perm Kitsune 💎</option>
+            <option value="Perm Dragon 💎">Perm Dragon 💎</option><option value="Perm Leopard 💎">Perm Leopard 💎</option>
+            <option value="Perm Dough 💎">Perm Dough 💎</option><option value="Perm Yeti 💎">Perm Yeti 💎</option>
             <option value="Perm Buddha 💎">Perm Buddha 💎</option>
-            <option value="Perm Magma 💎">Perm Magma 💎</option>
-            <option value="Perm Light 💎">Perm Light 💎</option>
-            <option value="Perm Ice 💎">Perm Ice 💎</option>
         </optgroup>
-        <optgroup label="🔴 МИФИЧЕСКИЕ ФРУКТЫ (MYTHICAL)">
-            <option value="Kitsune 🦊">Kitsune 🦊</option>
-            <option value="Dragon (Rework) 🐉">Dragon (Rework) 🐉</option>
-            <option value="Yeti ❄️">Yeti ❄️</option>
-            <option value="Leopard 🐆">Leopard 🐆</option>
-            <option value="T-Rex 🦖">T-Rex 🦖</option>
-            <option value="Dough 🍩">Dough 🍩</option>
-            <option value="Mammoth 🦣">Mammoth 🦣</option>
-            <option value="Spirit 👻">Spirit 👻</option>
-            <option value="Control 🎮">Control 🎮</option>
-            <option value="Venom 🧪">Venom 🧪</option>
-            <option value="Shadow 🖤">Shadow 🖤</option>
-            <option value="Gravity 🌌">Gravity 🌌</option>
-        </optgroup>
-        <optgroup label="🟣 ЛЕГЕНДАРНЫЕ ФРУКТЫ (LEGENDARY)">
-            <option value="Gas 💨">Gas 💨</option>
-            <option value="Blizzard ❄️">Blizzard ❄️</option>
-            <option value="Pain 💥">Pain 💥</option>
-            <option value="Rumble ⚡">Rumble ⚡</option>
-            <option value="Portal 🌀">Portal 🌀</option>
-            <option value="Phoenix 🦅">Phoenix 🦅</option>
-            <option value="Sound 🎵">Sound 🎵</option>
-            <option value="Spider 🕸️">Spider 🕸️</option>
-            <option value="Love 💖">Love 💖</option>
-            <option value="Buddha 👑">Buddha 👑</option>
-            <option value="Quake 🌋">Quake 🌋</option>
-        </optgroup>
-        <optgroup label="🔵 РЕДКИЕ ФРУКТЫ (RARE)">
-            <option value="Magma 🌋">Magma 🌋</option>
-            <option value="Ghost 👻">Ghost 👻</option>
+        <optgroup label="🔴 МИФИЧЕСКИЕ">
+            <option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon (Rework) 🐉">Dragon (Rework) 🐉</option>
+            <option value="Yeti ❄️">Yeti ❄️</option><option value="Leopard 🐆">Leopard 🐆</option>

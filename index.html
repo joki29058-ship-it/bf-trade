@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BF Trade Market - 4 Слоти</title>
+    <title>BF Trade Market - Исправленные Слоты</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
         body { background-color: #121214; color: #ffffff; padding: 15px; }
@@ -22,22 +22,20 @@
         .input-group { display: flex; flex-direction: column; gap: 5px; }
         input[type="text"], input[type="number"] { background: #2a2a32; color: #fff; border: 1px solid #444; padding: 12px; border-radius: 6px; font-size: 15px; outline: none; width: 100%; }
 
-        /* ИСПРАВЛЕННАЯ ЗОНА СЛОТОВ */
         .trade-zone { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
         .trade-side { flex: 1; min-width: 290px; background: #16161a; padding: 15px; border-radius: 12px; }
         .trade-side.give { border: 2px solid #ff5252; }
         .trade-side.get { border: 2px solid #00e676; }
         
-        /* Сетка слотов */
         .slots-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
         
-        /* Исправленный квадратный слот - теперь он идеально реагирует на тапы */
+        /* Большие квадратные слоты */
         .fruit-slot { 
             background: #222227; 
             border: 2px dashed #444; 
             border-radius: 10px; 
             padding: 10px; 
-            min-height: 90px; 
+            min-height: 95px; 
             display: flex; 
             flex-direction: column; 
             justify-content: space-between; 
@@ -45,18 +43,16 @@
         }
         .slot-title { font-size: 11px; color: #888; font-weight: bold; margin-bottom: 5px; }
         
-        /* Списки теперь крупные и легко нажимаются пальцем */
         .fruit-slot select { 
             background: #2a2a32; 
             color: #fff; 
             border: 1px solid #666; 
-            padding: 10px 5px; 
+            padding: 12px 5px; 
             border-radius: 6px; 
             font-size: 14px; 
             outline: none; 
             width: 100%; 
             cursor: pointer;
-            -webkit-appearance: none; /* Убирает баги на планшетах */
         }
 
         .main-btn { background: #00e676; color: #000; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; }
@@ -76,7 +72,6 @@
         
         .trade-action-btn { background: #ff9100; color: #000; padding: 12px 24px; font-size: 15px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
         
-        /* Модалка */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 100; }
         .modal-content { background: #1a1a1e; border: 1px solid #2d2d34; padding: 25px; border-radius: 12px; width: 90%; max-width: 480px; display: flex; flex-direction: column; gap: 15px; }
         .rating-stars { display: flex; gap: 8px; margin: 5px 0; cursor: pointer; }
@@ -91,11 +86,6 @@
 </head>
 <body>
 
-<header>
-    <h1>BF Trade Market Pro</h1>
-    <p style="color: #888; font-size: 13px; margin-top: 5px;">Обновление: исправлено нажатие строчек на планшетах [1.1]</p>
-</header>
-
 <div class="container">
     
     <div class="tabs">
@@ -105,7 +95,7 @@
 
     <div id="market-section" class="view-section active">
         <div class="seller-stats">
-            <div class="stat-box"><span>Ваша роль</span><strong>Учасник біржі</strong></div>
+            <div class="stat-box"><span>Ваша роль</span><strong>Учасникі біржі</strong></div>
             <div class="stat-box"><span>Успішні угоди</span><strong id="total-trades-count">0</strong></div>
             <div class="stat-box"><span>Загальна виручка</span><strong id="total-revenue-count">0 $</strong></div>
             <div class="stat-box"><span>Ваш рейтинг</span><strong id="total-rating-value" style="color: #ffca28;">⭐ 5.0</strong></div>
@@ -125,62 +115,22 @@
                 </div>
             </div>
 
-            <!-- ИСПРАВЛЕННЫЕ КВАДРАТНЫЕ СЛОТЫ -->
             <div class="trade-zone">
+                <!-- СЛОТЫ ОТДАЮ -->
                 <div class="trade-side give">
                     <h3 style="font-size: 14px; color: #ff5252; text-align: center;">Я ВІДДАЮ:</h3>
-                    <div class="slots-grid" id="give-slots-container"></div>
+                    <div class="slots-grid">
+                        <div class="fruit-slot"><span class="slot-title">Слот 1</span><select id="give-1"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                        <div class="fruit-slot"><span class="slot-title">Слот 2</span><select id="give-2"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                        <div class="fruit-slot"><span class="slot-title">Слот 3</span><select id="give-3"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                        <div class="fruit-slot"><span class="slot-title">Слот 4</span><select id="give-4"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                    </div>
                 </div>
 
+                <!-- СЛОТЫ ХОЧУ -->
                 <div class="trade-side get">
                     <h3 style="font-size: 14px; color: #00e676; text-align: center;">Я ХОЧУ ОТРИМАТИ:</h3>
-                    <div class="slots-grid" id="get-slots-container"></div>
-                </div>
-            </div>
-
-            <button class="main-btn" onclick="createMarketOffer()">Опублікувати на ринок</button>
-        </div>
-
-        <div class="card" style="margin-top: 20px;">
-            <h2>Активні оголошення на ринку</h2>
-            <div id="trades-list"></div>
-        </div>
-    </div>
-
-    <div id="sms-section" class="view-section">
-        <div class="chat-container">
-            <h2>Вхідні СМС-пропозиції, листи та відгуки від покупців</h2>
-            <div class="chat-messages" id="sms-list"></div>
-        </div>
-    </div>
-</div>
-
-<div class="modal" id="trade-modal">
-    <div class="modal-content">
-        <h3 style="color: #ff9100;">🤝 Оформити Трейд</h3>
-        <p id="modal-seller-info" style="font-size: 14px; color: #aaa; margin-bottom: 5px;"></p>
-        <div class="input-group"><label>Ваш Лист продавцю:</label><input type="text" id="buyer-note" placeholder="Наприклад: Готовий обміняти!"></div>
-        <div class="input-group"><label>Яку виручку отримає продавець ($):</label><input type="number" id="buyer-cash" placeholder="Сума угоди"></div>
-        <div class="input-group">
-            <label>Поставити оцінку продавцю:</label>
-            <div class="rating-stars" id="modal-stars">
-                <span class="star active" onclick="setModalRating(1)">★</span><span class="star active" onclick="setModalRating(2)">★</span><span class="star active" onclick="setModalRating(3)">★</span><span class="star active" onclick="setModalRating(4)">★</span><span class="star active" onclick="setModalRating(5)">★</span>
-            </div>
-        </div>
-        <div style="display: flex; gap: 10px; margin-top: 10px;">
-            <button class="main-btn" style="background: #ff9100;" onclick="submitBuyerTrade()">Надіслати Трейд</button>
-            <button class="main-btn" style="background: #444; color: #fff;" onclick="closeModal()">Скасувати</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    const itemsOptionsHTML = `
-        <option value="">[Порожньо]</option>
-        <optgroup label="⚡ ГЕЙМПАСИ">
-            <option value="Dark Blade 🗡️">Dark Blade 🗡️</option>
-            <option value="Fruit Notifier 🚨">Fruit Notifier 🚨</option>
-            <option value="2x Money 💰">2x Money 💰</option>
-            <option value="2x Mastery ✨">2x Mastery ✨</option>
-            <option value="2x Drop Chance 🍀">2x Drop Chance 🍀</option>
-
+                    <div class="slots-grid">
+                        <div class="fruit-slot"><span class="slot-title">Слот 1</span><select id="get-1"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                        <div class="fruit-slot"><span class="slot-title">Слот 2</span><select id="get-2"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                        <div class="fruit-slot"><span class="slot-title">Слот 3</span><select id="get-3"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>

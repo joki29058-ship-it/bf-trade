@@ -2,21 +2,48 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BF Trade Pro 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BF Swipe Market 2026</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-        body { background-color: #121214; color: #ffffff; padding: 15px; }
-        .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
         
-        /* СТИЛЬ ЛИЧНОЙ ПЕРЕПИСКИ В СТИЛЕ DISCORD */
+        /* ЖЕЛЕЗОБЕТОННЫЙ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ СТРАНИЦ */
+        body { background-color: #121214; color: #ffffff; overflow-y: hidden; }
+        
+        .swipe-container { 
+            display: flex; 
+            width: 200vw; /* 2 экрана бок о бок */
+            height: 100vh; 
+            overflow-x: scroll; 
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .screen { 
+            width: 100vw; 
+            height: 100vh; 
+            scroll-snap-align: start; 
+            flex-shrink: 0; 
+            padding: 15px; 
+            overflow-y: auto; /* Внутри экрана можно листать вниз */
+        }
+
+        /* ПОДСКАЗКА НАД СТРАНИЦЕЙ */
+        .swipe-hint { 
+            position: fixed; top: 0; left: 0; width: 100%; text-align: center; 
+            font-size: 13px; color: #00e676; z-index: 9999; font-weight: bold;
+            background: rgba(0,0,0,0.8); padding: 6px 0; pointer-events: none;
+            border-bottom: 1px solid #333;
+        }
+
+        /* ДИСКОРД ЧАТ (ВВЕРХУ) */
         .discord-container { background: #2f3136; border: 2px solid #5865f2; border-radius: 12px; padding: 15px; width: 100%; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(88,101,242,0.2); }
         .discord-header { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #40444b; padding-bottom: 8px; }
         .discord-avatar { width: 35px; height: 35px; background: #5865f2; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; }
         .discord-status { font-size: 14px; color: #ffffff; font-weight: bold; }
         .discord-status span { color: #3ba55d; font-size: 11px; margin-left: 5px; }
         
-        .discord-chat-wall { background: #36393f; border-radius: 8px; padding: 12px; height: 180px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .discord-chat-wall { background: #36393f; border-radius: 8px; padding: 12px; height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
         .msg-line { display: flex; flex-direction: column; gap: 2px; font-size: 14px; line-height: 1.4; }
         .msg-author { font-weight: bold; font-size: 13px; }
         .msg-bot { color: #5865f2; }
@@ -25,10 +52,9 @@
 
         .discord-input-form { display: flex; gap: 8px; width: 100%; }
         .discord-input { flex: 1; background: #40444b; color: #fff; border: 1px solid #202225; padding: 12px; border-radius: 8px; font-size: 14px; outline: none; }
-        .discord-send-btn { background: #5865f2; color: #fff; border: none; padding: 0 20px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
-        .discord-send-btn:active { background: #4752c4; }
+        .discord-send-btn { background: #5865f2; color: #fff; border: none; padding: 0 20px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 14px; }
 
-        /* ОСТАЛЬНЫЕ СТИЛИ САЙТА */
+        /* ФОРМА ТРЕЙДА С БОЛЬШИМИ СЛОТАМИ */
         .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; width: 100%; }
         h1 { color: #00e676; font-size: 22px; text-align: center; margin-bottom: 5px; }
         .info-inputs { display: flex; gap: 10px; margin-bottom: 15px; }
@@ -43,22 +69,20 @@
         .slot-row { display: flex; align-items: center; gap: 10px; background: #222227; padding: 6px 10px; border-radius: 8px; border: 1px solid #333; }
         .slot-row span { font-size: 13px; color: #888; font-weight: bold; width: 60px; }
 
-        /* КНОПКА ПУБЛИКАЦИИ */
+        /* ОГРОМНАЯ КНОПКА ПУБЛИКАЦИИ */
         .publish-btn { background: #00e676; color: #000; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 8px; text-align: center; width: 100%; margin-top: 10px; border: none; display: block; cursor: pointer; text-decoration: none; user-select: none; }
-        .publish-btn:active { background: #00c864; }
         
-        /* КАРТОЧКИ ОБЪЯВЛЕНИЙ В САМОМ НИЗУ */
-        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+        /* СТИЛИ СТРАНИЦЫ ОБЪЯВЛЕНИЙ (ПРАВЫЙ ЭКРАН) */
+        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 12px; min-height: 80vh; }
         .market-item { background: #222227; padding: 12px; border-radius: 8px; margin-bottom: 5px; border-left: 5px solid #ff9100; }
         .market-header { display: flex; justify-content: space-between; font-size: 13px; color: #aaa; margin-bottom: 6px; border-bottom: 1px solid #333; padding-bottom: 4px; }
         .fruits-line { margin: 4px 0; font-size: 15px; }
     </style>
     
-    <!-- ГЛАВНЫЙ НАДЁЖНЫЙ СКРИПТ (ВЫНЕСЕН НАВЕРХ) -->
     <script>
         function submitTradeManual() {
             let nick = document.getElementById('roblox-nick').value.trim() || "Игрок";
-            let time = document.getElementById('online-time').value.trim() || "Сейчас в игре";
+            let time = document.getElementById('online-time').value.trim() || "В сети";
             
             let g1 = document.getElementById('give1').value.trim();
             let g2 = document.getElementById('give2').value.trim();
@@ -70,85 +94,65 @@
             let gt3 = document.getElementById('get3').value.trim();
             let gt4 = document.getElementById('get4').value.trim();
 
-            if (!g1 && !g2 && !g3 && !g4) {
-                alert("Пожалуйста, напишите хотя бы один свой фрукт в слоты ОТДАЮ!");
-                return;
-            }
-            if (!gt1 && !gt2 && !gt3 && !gt4) {
-                alert("Пожалуйста, напишите что вы хотите получить взамен!");
-                return;
-            }
+            if (!g1 && !g2 && !g3 && !g4) { alert("Напишите свой фрукт в слоты ОТДАЮ!"); return; }
+            if (!gt1 && !gt2 && !gt3 && !gt4) { alert("Напишите фрукт в слоты ПОЛУЧИТЬ!"); return; }
             
-            // Формируем чистую рабочую ссылку для перезагрузки
             let currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            let targetUrl = currentUrl + "?v=20&nick=" + encodeURIComponent(nick) + "&time=" + encodeURIComponent(time) +
+            let targetUrl = currentUrl + "?v=22&go=1&nick=" + encodeURIComponent(nick) + "&time=" + encodeURIComponent(time) +
                             "&g1=" + encodeURIComponent(g1) + "&g2=" + encodeURIComponent(g2) + "&g3=" + encodeURIComponent(g3) + "&g4=" + encodeURIComponent(g4) +
                             "&gt1=" + encodeURIComponent(gt1) + "&gt2=" + encodeURIComponent(gt2) + "&gt3=" + encodeURIComponent(gt3) + "&gt4=" + encodeURIComponent(gt4);
             
             window.location.href = targetUrl;
         }
+
+        // Авто-перелистывание вправо на Ленту Трейдов после публикации
+        window.onload = function() {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('go') === '1') {
+                let scroller = document.getElementById('master-scroller');
+                if (scroller) {
+                    scroller.scrollTo({ left: window.innerWidth, behavior: 'instant' });
+                }
+            }
+        }
     </script>
 </head>
 <body>
 
-<div class="container">
-    
-    <!-- ================= 1. ОКНО ПЕРЕПИСКИ DISCORD (ВВЕРХУ) ================= -->
-    <div class="discord-container">
-        <div class="discord-header">
-            <div class="discord-avatar">💬</div>
-            <div class="discord-status">ЛС: FruitTrader_2026 <span>● онлайн</span></div>
-        </div>
-        
-        <div class="discord-chat-wall">
-            <div class="msg-line">
-                <span class="msg-author msg-bot">FruitTrader_2026:</span>
-                <span class="msg-text">Привет! Увидел твое объявление на рынке. За сколько отдашь Kitsune? 🦊</span>
-            </div>
-            <div class="msg-line">
-                <span class="msg-author msg-bot">FruitTrader_2026:</span>
-                <span class="msg-text">Могу предложить взамен геймпас 2x Money 💰 и Dragon Rework! Го обмен?</span>
-            </div>
-            
-            <script>
-                const chatParams = new URLSearchParams(window.location.search);
-                const replyText = chatParams.get('discord_msg');
-                if (replyText) {
-                    document.write(`
-                        <div class="msg-line">
-                            <span class="msg-author msg-you">Вы (Трейдер):</span>
-                            <span class="msg-text" style="background: rgba(0,230,118,0.1); border-left: 2px solid #00e676;">${replyText}</span>
-                        </div>
-                    `);
-                }
-            </script>
-        </div>
-        
-        <form method="GET" class="discord-input-form">
-            <input type="text" name="discord_msg" class="discord-input" placeholder="Написать сообщение в FruitTrader_2026..." required>
-            <button type="submit" class="discord-send-btn">Отправить</button>
-        </form>
-    </div>
+    <!-- СЕНСОРНАЯ ПОДСКАЗКА -->
+    <div class="swipe-hint">👉 СВАЙПНИ ПАЛЬЦЕМ ЭКРАН ВЛЕВО-ВПРАВО ДЛЯ ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ 👈</div>
 
-    <!-- ================= 2. ФОРМА СОЗДАНИЯ ОБЪЯВЛЕНИЯ (ПОСЕРЕДИНЕ) ================= -->
-    <div class="card">
-        <h1>BF Fruit & Gamepass Market 2026</h1>
-        <h2>Пиши фрукты в слоты руками с клавиатуры:</h2>
+    <div class="swipe-container" id="master-scroller">
         
-        <div class="info-inputs">
-            <div class="input-group"><label>Ваш никнейм в Roblox:</label><input type="text" id="roblox-nick" placeholder="Например, Trade_King"></div>
-            <div class="input-group"><label>Когда вы свободны?</label><input type="text" id="online-time" placeholder="Например: Сейчас в сети"></div>
-        </div>
+        <!-- ================= ЭКРАН 1 (ОСНОВНОЙ): ЧАТ И 4 БОЛЬШИХ СЛОТА ================= -->
+        <div class="screen">
+            <div style="margin-top: 35px; display: flex; flex-direction: column; gap: 15px;">
+                
+                <!-- ОКНО DISCORD -->
+                <div class="discord-container">
+                    <div class="discord-header">
+                        <div class="discord-avatar">💬</div>
+                        <div class="discord-status">ЛС: FruitTrader_2026 <span>● онлайн</span></div>
+                    </div>
+                    <div class="discord-chat-wall">
+                        <div class="msg-line"><span class="msg-author msg-bot">FruitTrader_2026:</span><span class="msg-text">Привет! За сколько отдашь Kitsune? 🦊</span></div>
+                        <div class="msg-line"><span class="msg-author msg-bot">FruitTrader_2026:</span><span class="msg-text">Могу предложить взамен геймпас 2x Money 💰 и Dragon Rework! Го обмен?</span></div>
+                        <script>
+                            const chatParams = new URLSearchParams(window.location.search);
+                            const replyText = chatParams.get('discord_msg');
+                            if (replyText) {
+                                document.write(`<div class="msg-line"><span class="msg-author msg-you">Вы (Трейдер):</span><span class="msg-text" style="background: rgba(0,230,118,0.1); border-left: 2px solid #00e676;">${replyText}</span></div>`);
+                            }
+                        </script>
+                    </div>
+                    <form method="GET" class="discord-input-form">
+                        <input type="text" name="discord_msg" class="discord-input" placeholder="Написать сообщение в чат..." required>
+                        <button type="submit" class="discord-send-btn">Отправить</button>
+                    </form>
+                </div>
 
-        <div class="trade-zone">
-            <div class="trade-side give">
-                <h3 style="color: #ff5252; margin-bottom:5px; font-size: 14px; text-align: center; font-weight: bold;">Я ОТДАЮ:</h3>
-                <div class="slot-row"><span>Слот 1</span><input type="text" id="give1" placeholder="Например, Yeti"></div>
-                <div class="slot-row"><span>Слот 2</span><input type="text" id="give2" placeholder="Например, Kitsune"></div>
-                <div class="slot-row"><span>Слот 3</span><input type="text" id="give3" placeholder="Еще один фрукт"></div>
-                <div class="slot-row"><span>Слот 4</span><input type="text" id="give4" placeholder="Еще один фрукт"></div>
-            </div>
-            
-            <div class="trade-side get">
-                <h3 style="color: #00e676; margin-bottom:5px; font-size: 14px; text-align: center; font-weight: bold;">Я ХОЧУ ПОЛУЧИТЬ:</h3>
-                <div class="slot-row"><span>Слот 1</span><input type="text" id="get1" placeholder="Например, 2x Money"></div>
+                <!-- ФОРМА СЛОТОВ -->
+                <div class="card">
+                    <h1>BF Fruit & Gamepass Market 2026</h1>
+                    <div class="info-inputs">
+                        <div class="input-group"><label>Ваш никнейм в Roblox:</label><input type="text" id="roblox-nick" placeholder="Например, Trade_King"></div>

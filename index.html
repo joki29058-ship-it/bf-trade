@@ -2,49 +2,76 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BF Trade Market - Без Багів</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BF Trade Market - Исправленный</title>
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-        body { background-color: #121214; color: #ffffff; padding: 10px; }
-        .container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 10px; }
-        .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 10px; padding: 12px; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { background-color: #121214; color: #ffffff; padding: 8px; }
+        .container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
+        .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 10px; padding: 10px; }
         
-        .seller-stats { display: flex; gap: 8px; background: #222227; border: 1px solid #00e676; padding: 8px; border-radius: 6px; }
+        .seller-stats { display: flex; gap: 6px; background: #222227; border: 1px solid #00e676; padding: 8px; border-radius: 6px; }
         .stat-box { flex: 1; text-align: center; }
         .stat-box span { display: block; font-size: 10px; color: #aaa; }
-        .stat-box strong { font-size: 14px; color: #00e676; }
+        .stat-box strong { font-size: 13px; color: #00e676; }
 
-        .info-inputs { display: flex; gap: 10px; margin-bottom: 10px; }
-        .input-group { flex: 1; display: flex; flex-direction: column; gap: 3px; }
+        .info-inputs { display: flex; gap: 8px; margin-bottom: 8px; }
+        .input-group { flex: 1; display: flex; flex-direction: column; gap: 2px; }
         label { font-size: 11px; color: #aaa; }
-        input[type="text"], input[type="number"] { background: #2a2a32; color: #fff; border: 1px solid #444; padding: 8px; border-radius: 6px; font-size: 14px; outline: none; }
+        input[type="text"], input[type="number"] { background: #2a2a32; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 6px; font-size: 14px; outline: none; width: 100%; }
 
-        .trade-zone { display: flex; gap: 10px; margin-bottom: 10px; }
-        .trade-side { flex: 1; background: #16161a; padding: 10px; border-radius: 10px; display: flex; flex-direction: column; gap: 6px; }
+        .trade-zone { display: flex; gap: 8px; margin-bottom: 8px; }
+        .trade-side { flex: 1; background: #16161a; padding: 8px; border-radius: 10px; display: flex; flex-direction: column; gap: 5px; }
         .trade-side.give { border: 2px solid #ff5252; }
         .trade-side.get { border: 2px solid #00e676; }
-        h3 { font-size: 12px; text-align: center; margin-bottom: 2px; }
+        h3 { font-size: 11px; text-align: center; margin-bottom: 2px; font-weight: bold; }
         
-        .slot-row { display: flex; align-items: center; gap: 5px; background: #222227; padding: 4px 8px; border-radius: 6px; border: 1px solid #333; }
-        .slot-row span { font-size: 11px; color: #888; width: 45px; }
-        .slot-row select { background: #2a2a32; color: #fff; border: 1px solid #555; padding: 6px; border-radius: 4px; font-size: 13px; outline: none; flex: 1; cursor: pointer; }
+        .slot-row { display: flex; align-items: center; gap: 4px; background: #222227; padding: 4px 6px; border-radius: 6px; border: 1px solid #333; }
+        .slot-row span { font-size: 10px; color: #888; width: 40px; }
+        .slot-row select { background: #2a2a32; color: #fff; border: 1px solid #555; padding: 8px 4px; border-radius: 4px; font-size: 13px; outline: none; flex: 1; cursor: pointer; }
 
-        .main-btn { background: #00e676; color: #000; border: none; padding: 12px; font-size: 15px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; }
+        /* ИСПРАВЛЕННЫЕ СЕНСОРНЫЕ КНОПКИ ДЛЯ ПЛАНШЕТА */
+        .touch-btn { 
+            background: #00e676; 
+            color: #000; 
+            padding: 15px; 
+            font-size: 16px; 
+            font-weight: bold; 
+            border-radius: 8px; 
+            text-align: center; 
+            cursor: pointer; 
+            width: 100%;
+            display: block;
+            user-select: none;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .touch-btn:active { background: #00c864; transform: scale(0.98); }
         
-        .tabs { display: flex; gap: 8px; }
-        .tab-btn { background: #2a2a32; color: #fff; padding: 8px 15px; border-radius: 6px; cursor: pointer; border: 1px solid #444; font-size: 13px; flex: 1; text-align: center; }
-        .tab-btn.active { background: #00e676; color: #000; font-weight: bold; }
+        /* Вкладки переключения */
+        .tabs { display: flex; gap: 6px; margin-bottom: 4px; }
+        .tab-touch-btn { 
+            background: #2a2a32; 
+            color: #fff; 
+            padding: 12px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            border: 1px solid #444; 
+            font-size: 14px; 
+            flex: 1; 
+            text-align: center;
+            font-weight: bold;
+        }
+        .tab-touch-btn.active { background: #00e676; color: #000; border-color: #00e676; }
         
         .view-section { display: none; }
         .view-section.active { display: block; }
         
-        .trade-item { background: #222227; border-left: 4px solid #00e676; padding: 12px; border-radius: 6px; margin-bottom: 10px; }
-        .trade-header { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; }
+        .trade-item { background: #222227; border-left: 4px solid #00e676; padding: 12px; border-radius: 6px; margin-bottom: 8px; }
+        .trade-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
         .trade-content { display: flex; justify-content: space-between; align-items: center; }
-        .fruits-line { margin: 4px 0; font-size: 14px; }
+        .fruits-line { margin: 2px 0; font-size: 13px; }
         
-        .trade-action-btn { background: #ff9100; color: #000; padding: 8px 15px; font-size: 13px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
+        .trade-action-btn { background: #ff9100; color: #000; padding: 10px 15px; font-size: 13px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
         
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 100; }
         .modal-content { background: #1a1a1e; border: 1px solid #2d2d34; padding: 20px; border-radius: 12px; width: 90%; max-width: 440px; display: flex; flex-direction: column; gap: 12px; }
@@ -52,24 +79,25 @@
         .star { font-size: 24px; color: #444; cursor: pointer; }
         .star.active { color: #ffca28; }
 
-        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; height: 350px; display: flex; flex-direction: column; }
+        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 12px; height: 360px; display: flex; flex-direction: column; }
         .chat-messages { flex: 1; overflow-y: auto; }
-        .sms-item { background: #2a2a32; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; font-size: 13px; border-left: 4px solid #00b0ff; line-height: 1.4; }
+        .sms-item { background: #2a2a32; padding: 10px; border-radius: 8px; margin-bottom: 6px; font-size: 13px; border-left: 4px solid #00b0ff; line-height: 1.4; }
         .sms-item.buyer-offer { border-left-color: #ff9100; background: #222227; }
     </style>
 </head>
 <body>
 
 <div class="container">
+    <!-- ИСПРАВЛЕННЫЕ НАЖИМАЕМЫЕ ВКЛАДКИ -->
     <div class="tabs">
-        <button class="tab-btn active" id="market-tab-btn" onclick="switchTab('market')">🛒 Ринок Пропозицій</button>
-        <button class="tab-btn" id="sms-tab-btn" onclick="switchTab('sms')">💬 Мої СМС / Чати</button>
+        <div class="tab-touch-btn active" id="market-tab-btn" onclick="switchTab('market')">🛒 Ринок Пропозицій</div>
+        <div class="tab-touch-btn" id="sms-tab-btn" onclick="switchTab('sms')">💬 Мої СМС / Чати</div>
     </div>
 
     <!-- ВКЛАДКА: РИНОК -->
     <div id="market-section" class="view-section active">
         <div class="seller-stats">
-            <div class="stat-box"><span>Ваша роль</span><strong>Учасникі біржі</strong></div>
+            <div class="stat-box"><span>Ваша роль</span><strong>Учасник біржі</strong></div>
             <div class="stat-box"><span>Успішні угоди</span><strong id="total-trades-count">0</strong></div>
             <div class="stat-box"><span>Загальна виручка</span><strong id="total-revenue-count">0 $</strong></div>
             <div class="stat-box"><span>Ваш рейтинг</span><strong id="total-rating-value" style="color: #ffca28;">⭐ 5.0</strong></div>
@@ -88,24 +116,28 @@
             </div>
 
             <div class="trade-zone">
+                <!-- СЛОТЫ ОТДАЮ -->
                 <div class="trade-side give">
                     <h3 style="color: #ff5252;">Я ВІДДАЮ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><select id="give-1"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
-                    <div class="slot-row"><span>Слот 2</span><select id="give-2"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
-                    <div class="slot-row"><span>Слот 3</span><select id="give-3"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
-                    <div class="slot-row"><span>Слот 4</span><select id="give-4"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
+                    <!-- Генерация слотов с АБСОЛЮТНО ВСЕМИ фруктами -->
+                    <div class="slot-row"><span>Слот 1</span><select id="give-1"></select></div>
+                    <div class="slot-row"><span>Слот 2</span><select id="give-2"></select></div>
+                    <div class="slot-row"><span>Слот 3</span><select id="give-3"></select></div>
+                    <div class="slot-row"><span>Слот 4</span><select id="give-4"></select></div>
                 </div>
 
+                <!-- СЛОТЫ ХОЧУ -->
                 <div class="trade-side get">
-                    <h3 style="color: #00e676;">Я ХОЧУ ОТРИМАТИ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><select id="get-1"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
-                    <div class="slot-row"><span>Слот 2</span><select id="get-2"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
-                    <div class="slot-row"><span>Слот 3</span><select id="get-3"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
-                    <div class="slot-row"><span>Слот 4</span><select id="get-4"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
+                    <h3 style="color: #00e676;">Я ХОЧУ:</h3>
+                    <div class="slot-row"><span>Слот 1</span><select id="get-1"></select></div>
+                    <div class="slot-row"><span>Слот 2</span><select id="get-2"></select></div>
+                    <div class="slot-row"><span>Слот 3</span><select id="get-3"></select></div>
+                    <div class="slot-row"><span>Слот 4</span><select id="get-4"></select></div>
                 </div>
             </div>
                 
-            <button class="main-btn" onclick="createMarketOffer()">Опублікувати на ринок</button>
+            <!-- МОБИЛЬНАЯ СЕНСОРНАЯ КНОПКА ОБНОВЛЕНА -->
+            <div class="touch-btn" onclick="createMarketOffer()">Опублікувати на ринок</div>
         </div>
 
         <div class="card" style="margin-top: 10px;">
@@ -124,3 +156,26 @@
 </div>
 
 <div class="modal" id="trade-modal">
+    <div class="modal-content">
+        <h3 style="color: #ff9100;">🤝 Оформити Трейд</h3>
+        <p id="modal-seller-info" style="font-size: 13px; color: #aaa;"></p>
+        <div class="input-group"><label>Ваш Лист продавцю:</label><input type="text" id="buyer-note" placeholder="Наприклад: Готовий обміняти!"></div>
+        <div class="input-group"><label>Яку виручку отримає продавець ($):</label><input type="number" id="buyer-cash" placeholder="Сума угоди"></div>
+        <div class="input-group">
+            <label>Поставити оцінку продавцю:</label>
+            <div class="rating-stars" id="modal-stars">
+                <span class="star active" onclick="setModalRating(1)">★</span><span class="star active" onclick="setModalRating(2)">★</span><span class="star active" onclick="setModalRating(3)">★</span><span class="star active" onclick="setModalRating(4)">★</span><span class="star active" onclick="setModalRating(5)">★</span>
+            </div>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 5px;">
+            <div class="touch-btn" style="background: #ff9100; padding: 10px; flex: 1;" onclick="submitBuyerTrade()">Надіслати</div>
+            <div class="touch-btn" style="background: #444; color: #fff; padding: 10px; flex: 1;" onclick="closeModal()">Скасувати</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // АБСОЛЮТНО ВСЕ ФРУКТЫ ИЗ ИГРЫ (ОТ МИФИЧЕСКИХ ДО ОБЫЧНЫХ) + ГЕЙМПАСЫ [1.1]
+    const allFruitsOptions = `
+        <option value="">[Порожньо]</option>
+        <optgroup label="⚡ ГЕЙМПАСИ / ПЕРМИ">

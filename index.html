@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BF Trade & Discord Chat 2026</title>
+    <title>BF Trade Pro 2026</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
         body { background-color: #121214; color: #ffffff; padding: 15px; }
@@ -44,17 +44,19 @@
         .slot-row span { font-size: 13px; color: #888; font-weight: bold; width: 60px; }
 
         .publish-btn { background: #00e676; color: #000; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 8px; text-align: center; width: 100%; margin-top: 10px; border: none; display: block; cursor: pointer; }
+        
+        /* КРАСИВЫЕ КАРТОЧКИ ОБЪЯВЛЕНИЙ */
         .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
-        .market-item { background: #222227; border-left: 4px solid #ff9100; padding: 12px; border-radius: 8px; margin-bottom: 5px; }
+        .market-item { background: #222227; padding: 12px; border-radius: 8px; margin-bottom: 5px; border-left: 5px solid #ff9100; }
         .market-header { display: flex; justify-content: space-between; font-size: 13px; color: #aaa; margin-bottom: 6px; border-bottom: 1px solid #333; padding-bottom: 4px; }
-        .fruits-line { margin: 3px 0; font-size: 14px; }
+        .fruits-line { margin: 4px 0; font-size: 15px; }
     </style>
 </head>
 <body>
 
 <div class="container">
     
-    <!-- ================= ОКНО ЛИЧНОЙ ПЕРЕПИСКИ В СТИЛЕ DISCORD ================= -->
+    <!-- ================= ОКНО ПЕРЕПИСКИ DISCORD ================= -->
     <div class="discord-container">
         <div class="discord-header">
             <div class="discord-avatar">💬</div>
@@ -91,7 +93,7 @@
         </form>
     </div>
 
-    <!-- ================= ФОРМА СОЗДАНИЯ ОБЪЯВЛЕНИЯ ВНИЗУ (РАСШИРЕНА ДО 4 СЛОТОВ) ================= -->
+    <!-- ================= ФОРМА СОЗДАНИЯ ОБЪЯВЛЕНИЯ НА 4 СЛОТА ================= -->
     <div class="card">
         <h1>BF Fruit & Gamepass Market 2026</h1>
         <h2>Пиши фрукты в слоты руками с клавиатуры:</h2>
@@ -103,7 +105,6 @@
             </div>
 
             <div class="trade-zone">
-                <!-- СЛОТЫ Я ОТДАЮ (ОБНОВЛЕНО ДО 4 СЛОТОВ) -->
                 <div class="trade-side give">
                     <h3 style="color: #ff5252; margin-bottom:5px; font-size: 14px; text-align: center; font-weight: bold;">Я ОТДАЮ:</h3>
                     <div class="slot-row"><span>Слот 1</span><input type="text" name="give1" placeholder="Например, Yeti"></div>
@@ -112,7 +113,6 @@
                     <div class="slot-row"><span>Слот 4</span><input type="text" name="give4" placeholder="Еще один фрукт"></div>
                 </div>
                 
-                <!-- СЛОТЫ Я ХОЧУ (ОБНОВЛЕНО ДО 4 СЛОТОВ) -->
                 <div class="trade-side get">
                     <h3 style="color: #00e676; margin-bottom:5px; font-size: 14px; text-align: center; font-weight: bold;">Я ХОЧУ ПОЛУЧИТЬ:</h3>
                     <div class="slot-row"><span>Слот 1</span><input type="text" name="get1" placeholder="Например, 2x Money"></div>
@@ -125,21 +125,22 @@
         </form>
     </div>
 
-    <!-- ЛЕНТА РЫНКА -->
+    <!-- ================= ЖЕЛЕЗОБЕТОННАЯ ЛЕНТА РЫНКА ================= -->
     <div class="chat-container">
         <h2 style="color: #00e676; text-align: left; font-size: 18px; font-weight: bold;">🛒 Активные предложения на рынке:</h2>
         <div id="market-list">
+            
+            <!-- Скрипт проверяет, заполнил ли ты форму, и выводит твой трейд наверх -->
             <script>
                 const urlParams = new URLSearchParams(window.location.search);
-                const nick = urlParams.get('nick') || "Аноним";
-                const time = urlParams.get('time') || "В сети прямо сейчас";
+                const uNick = urlParams.get('nick');
+                const uTime = urlParams.get('time') || "Сейчас в игре";
+                
                 let giveArr = [urlParams.get('give1'), urlParams.get('give2'), urlParams.get('give3'), urlParams.get('give4')].filter(Boolean);
                 let getArr = [urlParams.get('get1'), urlParams.get('get2'), urlParams.get('get3'), urlParams.get('get4')].filter(Boolean);
 
                 if (giveArr.length > 0 && getArr.length > 0) {
                     document.write(`
                         <div class="market-item" style="border-left-color: #00e676;">
-                            <div class="market-header"><span>👤 Продавец: <b style="color: #00e676;">${nick} (Вы)</b></span><span>⏰ Онлайн: ${time}</span></div>
+                            <div class="market-header"><span>👤 Продавец: <b style="color: #00e676;">${uNick || "Вы (Трейдер)"}</b></span><span>⏰ Онлайн: ${uTime}</span></div>
                             <div class="fruits-line">Отдаёт: <span style="color:#ff5252; font-weight:bold;">${giveArr.join(" + ")}</span></div>
-                            <div class="fruits-line">Хочет получить: <span style="color:#00e676; font-weight:bold;">${getArr.join(" + ")}</span></div>
-                        </div>

@@ -9,7 +9,6 @@
         body { background-color: #121214; color: #ffffff; padding: 15px; }
         .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
         
-        /* СВЕРХНАДЕЖНЫЕ ТЕГИ КНОПОК */
         .tabs { display: flex; gap: 10px; width: 100%; }
         .tab-btn { flex: 1; background: #2a2a32; color: #fff; padding: 18px; border-radius: 8px; text-align: center; font-size: 16px; font-weight: bold; border: 2px solid #444; cursor: pointer; text-decoration: none; display: block; }
         .tab-btn.active { background: #00e676; color: #000; border-color: #00e676; }
@@ -53,7 +52,7 @@
     <!-- КНОПКИ ВКЛАДОК -->
     <div class="tabs">
         <a class="tab-btn active" id="market-tab-btn" onclick="switchTab('market')">🛒 Рынок Предложений</a>
-        <a class="tab-btn" id="sms-tab-btn" onclick="switchTab('sms')">💬 Мои СМС / Чаты</a>
+        <a class="tab-btn" id="sms-tab-btn" onclick="switchTab('sms')">💬 Мои СМС / Чати</a>
     </div>
 
     <!-- РЫНОК -->
@@ -65,7 +64,7 @@
                     <input type="text" id="roblox-nick" placeholder="Например, Trade_Master">
                 </div>
                 <div class="input-group">
-                    <label>Когда вы свободны для обмена?</label>
+                    <label>Когда вы свободны для обмену?</label>
                     <input type="text" id="online-time" placeholder="Например: Сейчас в игре">
                 </div>
             </div>
@@ -74,19 +73,19 @@
                 <!-- СЛОТЫ ОТДАЮ -->
                 <div class="trade-side give">
                     <h3 style="color: #ff5252; margin-bottom:5px; font-size: 14px; text-align: center;">Я ОТДАЮ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><select id="give-1"></select></div>
-                    <div class="slot-row"><span>Слот 2</span><select id="give-2"></select></div>
-                    <div class="slot-row"><span>Слот 3</span><select id="give-3"></select></div>
-                    <div class="slot-row"><span>Слот 4</span><select id="give-4"></select></div>
+                    <div class="slot-row"><span>Слот 1</span><select id="give-1"><option value="">[Пусто]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                    <div class="slot-row"><span>Слот 2</span><select id="give-2"><option value="">[Пусто]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                    <div class="slot-row"><span>Слот 3</span><select id="give-3"><option value="">[Пусто]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                    <div class="slot-row"><span>Слот 4</span><select id="give-4"><option value="">[Пусто]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
                 </div>
 
                 <!-- СЛОТЫ ХОЧУ -->
                 <div class="trade-side get">
                     <h3 style="color: #00e676; margin-bottom:5px; font-size: 14px; text-align: center;">Я ХОЧУ ПОЛУЧИТЬ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><select id="get-1"></select></div>
-                    <div class="slot-row"><span>Слот 2</span><select id="get-2"></select></div>
-                    <div class="slot-row"><span>Слот 3</span><select id="get-3"></select></div>
-                    <div class="slot-row"><span>Слот 4</span><select id="get-4"></select></div>
+                    <div class="slot-row"><span>Слот 1</span><select id="get-1"><option value="">[Пусто]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                    <div class="slot-row"><span>Слот 2</span><select id="get-2"><option value="">[Пусто]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                    <div class="slot-row"><span>Слот 3</span><select id="get-3"><option value="">[Пусто]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                    <div class="slot-row"><span>Слот 4</span><select id="get-4"><option value="">[Пусто]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
                 </div>
             </div>
                 
@@ -109,51 +108,26 @@
     </div>
 </div>
 
-<div class="modal" id="trade-modal">
-    <div class="modal-content">
-        <h3>🤝 Оформить Трейд</h3>
-        <p id="modal-seller-info" style="color: #aaa; font-size:14px;"></p>
-        <div class="input-group"><label>Ваше Письмо продавцу:</label><input type="text" id="buyer-note" placeholder="Например: Готов обменять!"></div>
-        <div class="input-group"><label>Какую выручку получит продавец ($):</label><input type="number" id="buyer-cash" placeholder="Сума сделки"></div>
-        <div style="display: flex; gap: 10px; margin-top: 10px;">
-            <a class="publish-btn" style="background: #ff9100; margin: 0; flex: 1; padding: 12px;" onclick="submitBuyerTrade()">Отправить</a>
-            <a class="publish-btn" style="background: #444; color: #fff; margin: 0; flex: 1; padding: 12px;" onclick="closeModal()">Отмена</a>
-        </div>
-    </div>
-</div>
-
 <script>
-    // ВСЕ ФРУКТЫ И ГЕЙМПАСЫ НА РУССКОМ [1.1]
-    const listData = `
-        <option value="">[Пусто]</option>
-        <optgroup label="⚡ ГЕЙМПАСЫ / ПЕРМИ">
-            <option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="Fruit Notifier 🚨">Fruit Notifier 🚨</option>
-            <option value="2x Money 💰">2x Money 💰</option><option value="2x Mastery ✨">2x Mastery ✨</option>
-            <option value="2x Drop Chance 🍀">2x Drop Chance 🍀</option><option value="Fast Boats 🛥️">Fast Boats 🛥️</option>
-            <option value="+1 Storage 📦">+1 Storage 📦</option><option value="Perm Kitsune 💎">Perm Kitsune 💎</option>
-            <option value="Perm Dragon 💎">Perm Dragon 💎</option><option value="Perm Leopard 💎">Perm Leopard 💎</option>
-        </optgroup>
-        <optgroup label="🔴 МИФИЧЕСКИЕ">
-            <option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option>
-            <option value="Leopard 🐆">Leopard 🐆</option><option value="T-Rex 🦖">T-Rex 🦖</option>
-            <option value="Dough 🍩">Dough 🍩</option><option value="Mammoth 🦣">Mammoth 🦣</option>
-            <option value="Spirit 👻">Spirit 👻</option><option value="Control 🎮">Control 🎮</option>
-            <option value="Venom 🧪">Venom 🧪</option><option value="Shadow 🖤">Shadow 🖤</option>
-        </optgroup>
-        <optgroup label="🟣 ЛЕГЕНДАРНЫЕ">
-            <option value="Blizzard ❄️">Blizzard ❄️</option><option value="Pain 💥">Pain 💥</option>
-            <option value="Rumble ⚡">Rumble ⚡</option><option value="Portal 🌀">Portal 🌀</option>
-            <option value="Phoenix 🦅">Phoenix 🦅</option><option value="Sound 🎵">Sound 🎵</option>
-            <option value="Spider 🕸️">Spider 🕸️</option><option value="Love 💖">Love 💖</option>
-            <option value="Buddha 👑">Buddha 👑</option>
-        </optgroup>
-        <optgroup label="🔵 ОСТАЛЬНЫЕ ФРУКТЫ">
-            <option value="Magma 🌋">Magma 🌋</option><option value="Light ☀️">Light ☀️</option>
-            <option value="Ghost 👻">Ghost 👻</option><option value="Ice 🧊">Ice 🧊</option>
-            <option value="Dark 🌑">Dark 🌑</option><option value="Flame 🔥">Flame 🔥</option>
-            <option value="Rocket 🚀">Rocket 🚀</option>
-        </optgroup>
-    `;
+    let marketOffers = JSON.parse(localStorage.getItem('bf_sq_market')) || [];
+    let smsMessages = JSON.parse(localStorage.getItem('bf_sq_sms')) || [];
 
-    for(let i = 1; i <= 4; i++) {
-        document.getElementById(`give-${i}`).innerHTML = listData;
+    function switchTab(tabName) {
+        document.getElementById('market-section').classList.remove('active');
+        document.getElementById('sms-section').classList.remove('active');
+        document.getElementById('market-tab-btn').classList.remove('active');
+        document.getElementById('sms-tab-btn').classList.remove('active');
+        
+        if(tabName === 'market') {
+            document.getElementById('market-section').classList.add('active');
+            document.getElementById('market-tab-btn').classList.add('active');
+        } else {
+            document.getElementById('sms-section').classList.add('active');
+            document.getElementById('sms-tab-btn').classList.add('active');
+        }
+    }
+
+    function createMarketOffer() {
+        let nick = document.getElementById('roblox-nick').value.trim() || "Аноним";
+        let timeInfo = document.getElementById('online-time').value.trim() || "Сейчас свободен";
+        

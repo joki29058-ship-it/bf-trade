@@ -3,188 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BF Trade Market</title>
+    <title>BF Trade Market - Нова Версія</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background-color: #121214; color: #ffffff; padding: 10px; }
-        .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+        body { background-color: #121214; color: #ffffff; padding: 12px; }
+        .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
         
-        /* КРАСИВЫЕ КРУПНЫЕ ВКЛАДКИ - БЕЗ НАЛОЖЕНИЙ */
-        .tabs-container { display: flex; gap: 10px; width: 100%; margin-bottom: 5px; }
-        .tab-click { 
+        /* ВЕЛИКЕ МЕНЮ ДЛЯ ТАПІВ ПАЛЬЦЕМ */
+        .tabs-menu { display: flex; gap: 12px; width: 100%; margin-bottom: 5px; }
+        .tab-button { 
             flex: 1; 
-            background: #2a2a32; 
-            color: #fff; 
-            padding: 15px; 
-            border-radius: 8px; 
+            background-color: #2a2a32; 
+            color: #ffffff; 
+            padding: 18px; 
+            border-radius: 10px; 
             text-align: center; 
-            font-size: 15px; 
+            font-size: 16px; 
             font-weight: bold; 
-            border: 1px solid #444; 
+            border: 2px solid #444; 
             cursor: pointer;
             user-select: none;
         }
-        .tab-click.active { background: #00e676; color: #000; border-color: #00e676; }
+        .tab-button.active { background-color: #00e676; color: #000000; border-color: #00e676; }
 
-        .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; width: 100%; }
+        .card { background: #1a1a1e; border: 2px solid #2d2d34; border-radius: 12px; padding: 15px; width: 100%; }
         
-        .seller-stats { display: flex; gap: 8px; background: #222227; border: 1px solid #00e676; padding: 10px; border-radius: 8px; margin-bottom: 12px; }
+        .stats-grid { display: flex; gap: 10px; background: #222227; border: 2px solid #00e676; padding: 12px; border-radius: 8px; margin-bottom: 15px; }
         .stat-box { flex: 1; text-align: center; }
-        .stat-box span { display: block; font-size: 11px; color: #aaa; }
-        .stat-box strong { font-size: 14px; color: #00e676; }
+        .stat-box span { display: block; font-size: 11px; color: #aaa; margin-bottom: 3px; }
+        .stat-box strong { font-size: 15px; color: #00e676; }
 
-        .info-inputs { display: flex; gap: 10px; margin-bottom: 12px; width: 100%; }
-        .input-group { flex: 1; display: flex; flex-direction: column; gap: 4px; }
-        label { font-size: 12px; color: #aaa; }
-        input[type="text"], input[type="number"] { background: #2a2a32; color: #fff; border: 1px solid #444; padding: 12px; border-radius: 6px; font-size: 15px; outline: none; width: 100%; }
+        .inputs-row { display: flex; gap: 12px; margin-bottom: 15px; width: 100%; }
+        .input-box { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+        label { font-size: 13px; color: #ccc; font-weight: bold; }
+        input[type="text"], input[type="number"] { background: #2a2a32; color: #fff; border: 2px solid #444; padding: 14px; border-radius: 8px; font-size: 15px; outline: none; width: 100%; }
+        input:focus { border-color: #00e676; }
 
+        /* ЗОНА СЛОТІВ */
         .trade-zone { display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; width: 100%; }
-        .trade-side { background: #16161a; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 8px; }
-        .trade-side.give { border: 2px solid #ff5252; }
-        .trade-side.get { border: 2px solid #00e676; }
-        h3 { font-size: 13px; text-align: center; font-weight: bold; margin-bottom: 2px; }
+        .trade-block { background: #16161a; padding: 15px; border-radius: 12px; display: flex; flex-direction: column; gap: 10px; }
+        .trade-block.give { border: 2px solid #ff5252; }
+        .trade-block.get { border: 2px solid #00e676; }
+        h3 { font-size: 14px; text-align: center; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
         
-        /* СТРОКИ СЛОТОВ - ТЕПЕРЬ ВСЁ НАЖИМАЕТСЯ НА 100% */
-        .slot-row { display: flex; align-items: center; gap: 10px; background: #222227; padding: 6px 10px; border-radius: 8px; border: 1px solid #333; width: 100%; }
-        .slot-row span { font-size: 12px; color: #888; font-weight: bold; width: 50px; }
+        /* СЛОТИ СТАЛИ КРУПНИМИ */
+        .slot-line { display: flex; align-items: center; gap: 10px; background: #222227; padding: 8px 12px; border-radius: 8px; border: 1px solid #333; width: 100%; }
+        .slot-line span { font-size: 13px; color: #888; font-weight: bold; width: 60px; }
         
-        .slot-row select { 
+        .slot-line select { 
             background: #2a2a32; 
             color: #fff; 
-            border: 1px solid #555; 
-            padding: 10px; 
+            border: 2px solid #555; 
+            padding: 12px; 
             border-radius: 6px; 
-            font-size: 14px; 
+            font-size: 15px; 
             outline: none; 
             flex: 1;
             cursor: pointer;
-            display: block !important;
-            visibility: visible !important;
         }
 
-        /* ОГРОМНАЯ КНОПКА ПУБЛИКАЦИИ */
-        .publish-btn { 
-            background: #00e676; 
-            color: #000; 
-            padding: 16px; 
-            font-size: 16px; 
+        /* КНОПКА ПУБЛИКАЦІЇ НА ПІВ ЕКРАНУ */
+        .big-action-btn { 
+            background-color: #00e676; 
+            color: #000000; 
+            padding: 20px; 
+            font-size: 18px; 
             font-weight: bold; 
-            border-radius: 8px; 
+            border-radius: 10px; 
             text-align: center; 
             cursor: pointer; 
             width: 100%;
             user-select: none;
             margin-top: 5px;
-            box-shadow: 0 4px 10px rgba(0,230,118,0.2);
+            box-shadow: 0 5px 15px rgba(0,230,118,0.3);
         }
-        .publish-btn:active { background: #00c864; }
+        .big-action-btn:active { background-color: #00c864; transform: scale(0.99); }
         
-        /* СЕКЦИИ ВКЛАДОК */
-        .view-section { display: none; width: 100%; }
-        .view-section.active { display: block; }
+        .section-view { display: none; width: 100%; }
+        .section-view.active { display: block; }
         
-        /* ЛЕНТА РЫНКА */
-        .trade-item { background: #222227; border-left: 4px solid #00e676; padding: 15px; border-radius: 8px; margin-bottom: 12px; width: 100%; }
-        .trade-header { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; border-bottom: 1px solid #333; padding-bottom: 6px; }
-        .trade-content { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
-        .fruits-line { margin: 4px 0; font-size: 14px; }
+        /* РИНОК */
+        .market-card { background: #222227; border-left: 5px solid #00e676; padding: 15px; border-radius: 8px; margin-bottom: 12px; width: 100%; }
+        .market-card-header { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 10px; border-bottom: 1px solid #333; padding-bottom: 8px; color: #aaa; }
+        .market-card-content { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+        .item-text-line { margin: 5px 0; font-size: 15px; }
         
-        .trade-action-btn { background: #ff9100; color: #000; padding: 12px 22px; font-size: 14px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
+        .orange-trade-btn { background: #ff9100; color: #000; padding: 12px 25px; font-size: 15px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; }
         
-        /* МОДАЛКА ТРЕЙДА */
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 999; }
-        .modal-content { background: #1a1a1e; border: 1px solid #2d2d34; padding: 25px; border-radius: 12px; width: 90%; max-width: 450px; display: flex; flex-direction: column; gap: 15px; }
-        .rating-stars { display: flex; gap: 8px; margin: 5px 0; }
-        .star { font-size: 30px; color: #444; cursor: pointer; }
-        .star.active { color: #ffca28; }
+        /* МОДАЛКА */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 9999; }
+        .modal-body { background: #1a1a1e; border: 2px solid #2d2d34; padding: 25px; border-radius: 12px; width: 90%; max-width: 450px; display: flex; flex-direction: column; gap: 15px; }
+        .stars-row { display: flex; gap: 10px; margin: 5px 0; }
+        .star-item { font-size: 35px; color: #444; cursor: pointer; }
+        .star-item.active { color: #ffca28; }
 
-        /* СМС КОНТЕЙНЕР */
-        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; height: 420px; display: flex; flex-direction: column; width: 100%; }
-        .chat-messages { flex: 1; overflow-y: auto; }
-        .sms-item { background: #2a2a32; padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; border-left: 4px solid #00b0ff; line-height: 1.5; }
+        /* СМС */
+        .sms-box { background: #1a1a1e; border: 2px solid #2d2d34; border-radius: 12px; padding: 15px; height: 450px; display: flex; flex-direction: column; width: 100%; }
+        .sms-feed { flex: 1; overflow-y: auto; }
+        .sms-card-item { background: #2a2a32; padding: 14px; border-radius: 8px; margin-bottom: 10px; font-size: 14px; border-left: 4px solid #00b0ff; line-height: 1.5; }
     </style>
 </head>
 <body>
 
 <div class="container">
     
-    <!-- ПОЛНОСТЬЮ РАБОЧИЕ НЕЗАВИСИМЫЕ ВКЛАДКИ -->
-    <div class="tabs-container">
-        <div class="tab-click active" id="market-tab-btn" onclick="handleTabClick('market')">🛒 Ринок Пропозицій</div>
-        <div class="tab-click" id="sms-tab-btn" onclick="handleTabClick('sms')">💬 Мої СМС / Чати</div>
+    <!-- КНОПКИ ПЕРЕМИКАННЯ ВКЛАДОК -->
+    <div class="tabs-menu">
+        <div class="tab-button active" id="btn-tab-market" onclick="changeTab('market')">🛒 Ринок Пропозицій</div>
+        <div class="tab-button" id="btn-tab-sms" onclick="changeTab('sms')">💬 Мої СМС / Чати</div>
     </div>
 
-    <!-- РАЗДЕЛ 1: РЫНОК -->
-    <div id="market-section" class="view-section active">
-        <div class="seller-stats">
+    <!-- ЕКРАН 1: РИНОК -->
+    <div id="view-market" class="section-view active">
+        <div class="stats-grid">
             <div class="stat-box"><span>Ваша роль</span><strong>Учасник біржі</strong></div>
-            <div class="stat-box"><span>Успішні угоди</span><strong id="total-trades-count">0</strong></div>
-            <div class="stat-box"><span>Загальна виручка</span><strong id="total-revenue-count">0 $</strong></div>
-            <div class="stat-box"><span>Ваш рейтинг</span><strong id="total-rating-value" style="color: #ffca28;">⭐ 5.0</strong></div>
+            <div class="stat-box"><span>Успішні угоди</span><strong id="ui-trades">0</strong></div>
+            <div class="stat-box"><span>Загальна виручка</span><strong id="ui-revenue">0 $</strong></div>
+            <div class="stat-box"><span>Ваш рейтинг</span><strong id="ui-rating" style="color: #ffca28;">⭐ 5.0</strong></div>
         </div>
 
         <div class="card">
-            <div class="info-inputs">
-                <div class="input-group">
+            <div class="inputs-row">
+                <div class="input-box">
                     <label>Ваш нікнейм у Roblox:</label>
-                    <input type="text" id="roblox-nick" placeholder="Наприклад, Trade_Master">
+                    <input type="text" id="input-nick" placeholder="Наприклад, Pro_Trader">
                 </div>
-                <div class="input-group">
+                <div class="input-box">
                     <label>Коли ви вільні для обміну?</label>
-                    <input type="text" id="online-time" placeholder="Наприклад: Зараз у грі">
+                    <input type="text" id="input-time" placeholder="Наприклад: Зараз в онлайн">
                 </div>
             </div>
 
             <div class="trade-zone">
-                <!-- СЛОТЫ Я ОТДАЮ -->
-                <div class="trade-side give">
+                <!-- СЛОТИ ВІДДАЮ -->
+                <div class="trade-block give">
                     <h3 style="color: #ff5252;">Я ВІДДАЮ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><select id="give-1"></select></div>
-                    <div class="slot-row"><span>Слот 2</span><select id="give-2"></select></div>
-                    <div class="slot-row"><span>Слот 3</span><select id="give-3"></select></div>
-                    <div class="slot-row"><span>Слот 4</span><select id="give-4"></select></div>
+                    <div class="slot-line"><span>Слот 1</span><select id="give-slot-1"></select></div>
+                    <div class="slot-line"><span>Слот 2</span><select id="give-slot-2"></select></div>
+                    <div class="slot-line"><span>Слот 3</span><select id="give-slot-3"></select></div>
+                    <div class="slot-line"><span>Слот 4</span><select id="give-slot-4"></select></div>
                 </div>
 
-                <!-- СЛОТЫ Я ХОЧУ -->
-                <div class="trade-side get">
-                    <h3 style="color: #00e676;">Я ХОЧУ ОТРИМАТИ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><select id="get-1"></select></div>
-                    <div class="slot-row"><span>Слот 2</span><select id="get-2"></select></div>
-                    <div class="slot-row"><span>Слот 3</span><select id="get-3"></select></div>
-                    <div class="slot-row"><span>Слот 4</span><select id="get-4"></select></div>
+                <!-- СЛОТЫ ХОЧУ -->
+                <div class="trade-block get">
+                    <h3 style="color: #00e676;">Я ХОЧУ ОТРИMАТИ:</h3>
+                    <div class="slot-line"><span>Слот 1</span><select id="get-slot-1"></select></div>
+                    <div class="slot-line"><span>Слот 2</span><select id="get-slot-2"></select></div>
+                    <div class="slot-line"><span>Слот 3</span><select id="get-slot-3"></select></div>
+                    <div class="slot-line"><span>Слот 4</span><select id="get-slot-4"></select></div>
                 </div>
             </div>
                 
-            <!-- НАЖИМАЕМАЯ СЕНСОРНАЯ КНОПКА ПУБЛИКАЦИИ -->
-            <div class="publish-btn" onclick="triggerPublish()">Опублікувати на ринок</div>
+            <!-- НАЖИМАЄТЬСЯ НА 100% -->
+            <div class="big-action-btn" onclick="publishNewOffer()">Опублікувати на ринок</div>
         </div>
 
         <div class="card" style="margin-top: 15px;">
             <h2>Активні оголошення на ринку</h2>
-            <div id="trades-list"></div>
+            <div id="market-offers-list"></div>
         </div>
     </div>
 
-    <!-- РАЗДЕЛ 2: СМС -->
-    <div id="sms-section" class="view-section">
-        <div class="chat-container">
+    <!-- ЕКРАН 2: СМС -->
+    <div id="view-sms" class="section-view">
+        <div class="sms-box">
             <h2>Вхідні СМС-пропозиції від покупців</h2>
-            <div class="chat-messages" id="sms-list"></div>
+            <div class="sms-feed" id="sms-offers-list"></div>
         </div>
     </div>
 </div>
 
-<!-- МОДАЛКА -->
-<div class="modal" id="trade-modal">
-    <div class="modal-content">
-        <h3 style="color: #ff9100;">🤝 Оформити Трейд</h3>
-        <p id="modal-seller-info" style="font-size: 13px; color: #aaa;"></p>
-        <div class="input-group"><label>Ваш Лист продавцю:</label><input type="text" id="buyer-note" placeholder="Наприклад: Готовий обміняти!"></div>
-        <div class="input-group"><label>Яку виручку отримає продавець ($):</label><input type="number" id="buyer-cash" placeholder="Сума угоди"></div>
-        <div class="input-group">
+<!-- МОДАЛЬНЕ ВІКНО -->
+<div class="modal-overlay" id="popup-trade">
+    <div class="modal-body">
+        <h3 style="color: #ff9100; font-size: 18px;">🤝 Оформити Трейд</h3>
+        <p id="popup-seller" style="font-size: 14px; color: #aaa;"></p>
+        <div class="input-box"><label>Ваш Лист продавцю:</label><input type="text" id="popup-note" placeholder="Наприклад: Готовий обміняти!"></div>
+        <div class="input-box"><label>Яку виручку отримає продавець ($):</label><input type="number" id="popup-cash" placeholder="Сума угоди"></div>
+        <div class="input-box">
             <label>Поставити оцінку продавцю:</label>
-            <div class="rating-stars" id="modal-stars">
-                <span class="star active" onclick="setModalRating(1)">★</span><span class="star active" onclick="setModalRating(2)">★</span><span class="star active" onclick="setModalRating(3)">★</span><span class="star active" onclick="setModalRating(4)">★</span><span class="star active" onclick="setModalRating(5)">★</span>
+            <div class="stars-row" id="popup-stars-zone">
+                <span class="star-item active" onclick="changeModalStars(1)">★</span><span class="star-item active" onclick="changeModalStars(2)">★</span><span class="star-item active" onclick="changeModalStars(3)">★</span><span class="star-item active" onclick="changeModalStars(4)">★</span><span class="star-item active" onclick="changeModalStars(5)">★</span>
             </div>
         </div>
-        <div style="display: flex; gap: 10px; margin-top: 10px;">

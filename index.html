@@ -25,7 +25,7 @@
 
         .discord-input-form { display: flex; gap: 8px; width: 100%; }
         .discord-input { flex: 1; background: #40444b; color: #fff; border: 1px solid #202225; padding: 12px; border-radius: 8px; font-size: 14px; outline: none; }
-        .discord-send-btn { background: #5865f2; color: #fff; border: none; padding: 0 20px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .discord-send-btn { background: #5865f2; color: #fff; border: none; padding: 0 20px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; }
         .discord-send-btn:active { background: #4752c4; }
 
         /* ОСТАЛЬНЫЕ СТИЛИ САЙТА */
@@ -43,7 +43,9 @@
         .slot-row { display: flex; align-items: center; gap: 10px; background: #222227; padding: 6px 10px; border-radius: 8px; border: 1px solid #333; }
         .slot-row span { font-size: 13px; color: #888; font-weight: bold; width: 60px; }
 
-        .publish-btn { background: #00e676; color: #000; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 8px; text-align: center; width: 100%; margin-top: 10px; border: none; display: block; cursor: pointer; }
+        /* НАДЁЖНАЯ ССЫЛКА-КНОПКА */
+        .publish-btn { background: #00e676; color: #000; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 8px; text-align: center; width: 100%; margin-top: 10px; border: none; display: block; cursor: pointer; text-decoration: none; user-select: none; }
+        .publish-btn:active { background: #00c864; }
         
         /* КРАСИВЫЕ КАРТОЧКИ ОБЪЯВЛЕНИЙ В САМОМ НИЗУ */
         .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
@@ -66,7 +68,7 @@
         <div class="discord-chat-wall">
             <div class="msg-line">
                 <span class="msg-author msg-bot">FruitTrader_2026:</span>
-                <span class="msg-text">Привет! Увидел твое объявление на рынке. За сколько отдашь Kitsune? 🦊</span>
+                <span class="msg-text">Привет! Увидел твое объявиление на рынке. За сколько отдашь Kitsune? 🦊</span>
             </div>
             <div class="msg-line">
                 <span class="msg-author msg-bot">FruitTrader_2026:</span>
@@ -98,31 +100,30 @@
         <h1>BF Fruit & Gamepass Market 2026</h1>
         <h2>Пиши фрукты в слоты руками с клавиатуры:</h2>
         
-        <form method="GET">
-            <div class="info-inputs">
-                <div class="input-group"><label>Ваш никнейм в Roblox:</label><input type="text" name="nick" placeholder="Например, Trade_King"></div>
-                <div class="input-group"><label>Когда вы свободны?</label><input type="text" name="time" placeholder="Например: Сейчас в сети"></div>
-            </div>
+        <div class="info-inputs">
+            <div class="input-group"><label>Ваш никнейм в Roblox:</label><input type="text" id="roblox-nick" placeholder="Например, Trade_King"></div>
+            <div class="input-group"><label>Когда вы свободны?</label><input type="text" id="online-time" placeholder="Например: Сейчас в сети"></div>
+        </div>
 
-            <div class="trade-zone">
-                <div class="trade-side give">
-                    <h3 style="color: #ff5252; margin-bottom:5px; font-size: 14px; text-align: center; font-weight: bold;">Я ОТДАЮ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><input type="text" name="give1" placeholder="Например, Yeti"></div>
-                    <div class="slot-row"><span>Слот 2</span><input type="text" name="give2" placeholder="Например, Kitsune"></div>
-                    <div class="slot-row"><span>Слот 3</span><input type="text" name="give3" placeholder="Еще один фрукт"></div>
-                    <div class="slot-row"><span>Слот 4</span><input type="text" name="give4" placeholder="Еще один фрукт"></div>
-                </div>
-                
-                <div class="trade-side get">
-                    <h3 style="color: #00e676; margin-bottom:5px; font-size: 14px; text-align: center; font-weight: bold;">Я ХОЧУ ПОЛУЧИТЬ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><input type="text" name="get1" placeholder="Например, 2x Money"></div>
-                    <div class="slot-row"><span>Слот 2</span><input type="text" name="get2" placeholder="Например, 2x Storage"></div>
-                    <div class="slot-row"><span>Слот 3</span><input type="text" name="get3" placeholder="Еще один фрукт"></div>
-                    <div class="slot-row"><span>Слот 4</span><input type="text" name="get4" placeholder="Еще один фрукт"></div>
-                </div>
+        <div class="trade-zone">
+            <div class="trade-side give">
+                <h3 style="color: #ff5252; margin-bottom:5px; font-size: 14px; text-align: center; font-weight: bold;">Я ОТДАЮ:</h3>
+                <div class="slot-row"><span>Слот 1</span><input type="text" id="give1" placeholder="Например, Yeti"></div>
+                <div class="slot-row"><span>Слот 2</span><input type="text" id="give2" placeholder="Например, Kitsune"></div>
+                <div class="slot-row"><span>Слот 3</span><input type="text" id="give3" placeholder="Еще один фрукт"></div>
+                <div class="slot-row"><span>Слот 4</span><input type="text" id="give4" placeholder="Еще один фрукт"></div>
             </div>
-            <button type="submit" class="publish-btn">Опубликовать Трейд на рынок</button>
-        </form>
+            
+            <div class="trade-side get">
+                <h3 style="color: #00e676; margin-bottom:5px; font-size: 14px; text-align: center; font-weight: bold;">Я ХОЧУ ПОЛУЧИТЬ:</h3>
+                <div class="slot-row"><span>Слот 1</span><input type="text" id="get1" placeholder="Например, 2x Money"></div>
+                <div class="slot-row"><span>Слот 2</span><input type="text" id="get2" placeholder="Например, 2x Storage"></div>
+                <div class="slot-row"><span>Слот 3</span><input type="text" id="get3" placeholder="Еще один фрукт"></div>
+                <div class="slot-row"><span>Слот 4</span><input type="text" id="get4" placeholder="Еще один фрукт"></div>
+            </div>
+        </div>
+        <!-- Неубиваемая функция ручного редиректа -->
+        <a class="publish-btn" onclick="submitTradeManual()">Опубликовать Трейд на рынок</a>
     </div>
 
     <!-- ================= 3. ЛЕНТА АКТИВНЫХ ОБЪЯВЛЕНИЙ (В САМОМ НИЗУ) ================= -->
@@ -135,8 +136,8 @@
                 const uNick = urlParams.get('nick');
                 const uTime = urlParams.get('time') || "Сейчас в игре";
                 
-                let giveArr = [urlParams.get('give1'), urlParams.get('give2'), urlParams.get('give3'), urlParams.get('give4')].filter(Boolean);
-                let getArr = [urlParams.get('get1'), urlParams.get('get2'), urlParams.get('get3'), urlParams.get('get4')].filter(Boolean);
+                let giveArr = [urlParams.get('g1'), urlParams.get('g2'), urlParams.get('g3'), urlParams.get('g4')].filter(Boolean);
+                let getArr = [urlParams.get('gt1'), urlParams.get('get2'), urlParams.get('gt3'), urlParams.get('gt4')].filter(Boolean);
 
                 if (giveArr.length > 0 && getArr.length > 0) {
                     document.write(`

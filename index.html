@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BF Trade Single</title>
+    <title>BF Полный Маркет 2026</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
         body { background-color: #121214; color: #ffffff; padding: 15px; }
@@ -11,7 +11,7 @@
         
         .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; width: 100%; }
         h1 { color: #00e676; font-size: 24px; text-align: center; margin-bottom: 5px; }
-        h2 { font-size: 16px; color: #aaa; margin-bottom: 15px; }
+        h2 { font-size: 15px; color: #aaa; margin-bottom: 15px; text-align: center; }
 
         .info-inputs { display: flex; gap: 10px; margin-bottom: 15px; }
         .input-group { flex: 1; display: flex; flex-direction: column; gap: 5px; }
@@ -25,14 +25,20 @@
         .slot-row { display: flex; align-items: center; gap: 10px; background: #222227; padding: 8px; border-radius: 8px; }
         .slot-row span { font-size: 13px; color: #888; font-weight: bold; width: 60px; }
         
-        /* КРУПНЫЕ СЕЛЕКТОРЫ - ТЕПЕРЬ ОНИ ТОЧНО ОТКРОЮТСЯ */
+        /* ВЫПАДАЮЩИЙ СПИСОК ПРЕДМЕТОВ */
         .slot-row select { background: #2a2a32; color: #fff; border: 1px solid #555; padding: 12px; border-radius: 6px; font-size: 15px; outline: none; flex: 1; cursor: pointer; display: block !important; }
 
-        /* ЧИСТАЯ ФОРМА ДЛЯ СРАБАТЫВАНИЯ БЕЗ СКРИПТОВ */
-        .publish-btn { background: #00e676; color: #000; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 8px; text-align: center; cursor: pointer; width: 100%; margin-top: 10px; border: none; display: block; }
+        .publish-btn { background: #00e676; color: #000; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 8px; text-align: center; cursor: pointer; width: 100%; margin-top: 10px; border: none; display: block; user-select: none; }
+        .trade-action-btn { background: #ff9100; color: #000; padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
 
-        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; min-height: 250px; display: flex; flex-direction: column; }
-        .sms-item { background: #2a2a32; padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; border-left: 4px solid #00b0ff; line-height: 1.5; }
+        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; min-height: 350px; display: flex; flex-direction: column; gap: 12px; }
+        .market-item { background: #222227; border-left: 4px solid #ff5252; padding: 12px; border-radius: 8px; margin-bottom: 5px; }
+        .market-header { display: flex; justify-content: space-between; font-size: 13px; color: #aaa; margin-bottom: 6px; border-bottom: 1px solid #333; padding-bottom: 4px; }
+        .market-content { display: flex; justify-content: space-between; align-items: center; }
+        .fruits-line { margin: 3px 0; font-size: 14px; }
+
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 999; }
+        .modal-content { background: #1a1a1e; border: 1px solid #2d2d34; padding: 25px; border-radius: 12px; width: 95%; max-width: 450px; display: flex; flex-direction: column; gap: 15px; }
     </style>
 </head>
 <body>
@@ -40,15 +46,14 @@
 <div class="container">
     
     <div class="card">
-        <h1>BF Fruit Market Pro</h1>
-        <h2 style="text-align: center;">Всё на одной странице — без переключения вкладок!</h2>
+        <h1>BF Fruit & Gamepass Market</h1>
+        <h2>Выберите предметы, введите ник и нажмите кнопку публикации ниже!</h2>
         
-        <!-- Чистая HTML-форма, отправляет данные без JavaScript -->
         <form action="#sms-section" method="GET" onsubmit="return saveTradeManual()">
             <div class="info-inputs">
                 <div class="input-group">
                     <label>Ваш никнейм в Roblox:</label>
-                    <input type="text" id="roblox-nick" placeholder="Например, Trade_Master">
+                    <input type="text" id="roblox-nick" placeholder="Например, Pro_Gamer2026">
                 </div>
                 <div class="input-group">
                     <label>Когда вы свободны для обмена?</label>
@@ -60,64 +65,99 @@
                 <!-- СЛОТЫ ОТДАЮ -->
                 <div class="trade-side give">
                     <h3 style="color: #ff5252; margin-bottom:5px; font-size: 14px; text-align: center;">Я ОТДАЮ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><select id="give-1"><option value="">[Пусто]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
-                    <div class="slot-row"><span>Слот 2</span><select id="give-2"><option value="">[Пусто]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
-                    <div class="slot-row"><span>Слот 3</span><select id="give-3"><option value="">[Пусто]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
-                    <div class="slot-row"><span>Слот 4</span><select id="give-4"><option value="">[Пусто]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                    <div class="slot-row"><span>Слот 1</span><select id="give-1"></select></div>
+                    <div class="slot-row"><span>Слот 2</span><select id="give-2"></select></div>
+                    <div class="slot-row"><span>Слот 3</span><select id="give-3"></select></div>
+                    <div class="slot-row"><span>Слот 4</span><select id="give-4"></select></div>
                 </div>
 
                 <!-- СЛОТЫ ХОЧУ -->
                 <div class="trade-side get">
                     <h3 style="color: #00e676; margin-bottom:5px; font-size: 14px; text-align: center;">Я ХОЧУ ПОЛУЧИТЬ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><select id="get-1"><option value="">[Пусто]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
-                    <div class="slot-row"><span>Слот 2</span><select id="get-2"><option value="">[Пусто]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
-                    <div class="slot-row"><span>Слот 3</span><select id="get-3"><option value="">[Пусто]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
-                    <div class="slot-row"><span>Слот 4</span><select id="get-4"><option value="">[Пусто]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="2x Money 💰">2x Money 💰</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                    <div class="slot-row"><span>Слот 1</span><select id="get-1"></select></div>
+                    <div class="slot-row"><span>Слот 2</span><select id="get-2"></select></div>
+                    <div class="slot-row"><span>Слот 3</span><select id="get-3"></select></div>
+                    <div class="slot-row"><span>Слот 4</span><select id="get-4"></select></div>
                 </div>
             </div>
             
-            <button type="submit" class="publish-btn">Опубликовать Трейд</button>
+            <button type="submit" class="publish-btn">Опубликовать предложение на рынок</button>
         </form>
     </div>
 
-    <!-- СМС ЛЕНТА СРАЗУ ВНИЗУ СТРАНИЦЫ -->
+    <!-- ТАБЛИЦА ОБЪЯВЛЕНИЙ -->
     <div class="chat-container" id="sms-section">
-        <h2 style="color: #00b0ff;">💬 Лента угод и СМС-сообщения:</h2>
-        <div id="sms-list">
-            <div class="sms-item">Пока нет созданных трейдов. Выберите фрукты выше и нажмите «Опубликовать Трейд».</div>
+        <h2 style="color: #00e676; text-align: left; font-size: 17px;">🛒 Активные предложения на рынке и отзывы:</h2>
+        <div id="market-list"></div>
+    </div>
+</div>
+
+<div class="modal" id="trade-modal">
+    <div class="modal-content">
+        <h3>🤝 Оформить ответный Трейд</h3>
+        <p id="modal-seller-info" style="color: #aaa; font-size:14px; margin-bottom: 5px;"></p>
+        <div class="input-group"><label>Ваш отзыв или предложение:</label><input type="text" id="buyer-note" placeholder="Например: Готов обменять!"></div>
+        <div class="input-group"><label>Какую выручку перечислить ($):</label><input type="number" id="buyer-cash" placeholder="Сумма"></div>
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button class="publish-btn" style="background: #ff9100; margin: 0; flex: 1; padding: 12px;" onclick="submitBuyerTradeHTML()">Отправить ответ</button>
+            <button class="publish-btn" style="background: #444; color: #fff; margin: 0; flex: 1; padding: 12px;" onclick="closeModal()">Отмена</button>
         </div>
     </div>
 </div>
 
 <script>
-    function saveTradeManual() {
-        let nick = document.getElementById('roblox-nick').value.trim() || "Игрок";
-        let time = document.getElementById('online-time').value.trim() || "Сейчас в игре";
-        
-        let giveFruits = [document.getElementById('give-1').value, document.getElementById('give-2').value, document.getElementById('give-3').value, document.getElementById('give-4').value].filter(f => f !== "");
-        let getFruits = [document.getElementById('get-1').value, document.getElementById('get-2').value, document.getElementById('get-3').value, document.getElementById('get-4').value].filter(f => f !== "");
-
-        if (giveFruits.length === 0 || getFruits.length === 0) {
-            alert("Выберите хотя бы по 1 предмету!");
-            return false;
-        }
-
-        let newLog = `<div class="sms-item">📢 <b>Новая сделка создана!</b><br>👤 Ник продавца: <b>${nick}</b> | ⏰ Время: <i>${time}</i><br>📤 Отдает: <span style="color:#ff5252">${giveFruits.join(" + ")}</span><br>📥 Хочет получить: <span style="color:#00e676">${getFruits.join(" + ")}</span></div>`;
-        
-        let oldLogs = localStorage.getItem('bf_single_logs') || "";
-        localStorage.setItem('bf_single_logs', newLog + oldLogs);
-        
-        loadLogs();
-        return false; // Предотвращает перезагрузку страницы
-    }
-
-    function loadLogs() {
-        let saved = localStorage.getItem('bf_single_logs');
-        if (saved) {
-            document.getElementById('sms-list').innerHTML = saved;
-        }
-    }
-    loadLogs();
-</script>
-</body>
-</html>
+    // АБСОЛЮТНО ВСЕ ПРЕДМЕТЫ ИЗ BLOX FRUITS НА 2026 ГОД [1.1]
+    const fullItemsListHTML = `
+        <option value="">[Пустой Слот]</option>
+        <optgroup label="⚡ ВСЕ ГЕЙМПАСЫ (GAMEPASSES)">
+            <option value="Dark Blade 🗡️">Dark Blade 🗡️</option>
+            <option value="Fruit Notifier 🚨">Fruit Notifier 🚨</option>
+            <option value="2x Money 💰">2x Money 💰</option>
+            <option value="2x Mastery ✨">2x Mastery ✨</option>
+            <option value="2x Drop Chance 🍀">2x Drop Chance 🍀</option>
+            <option value="Fast Boats 🛥️">Fast Boats 🛥️</option>
+            <option value="+1 Fruit Storage 📦">+1 Fruit Storage 📦</option>
+        </optgroup>
+        <optgroup label="💎 ПОСТОЯННЫЕ ФРУКТЫ (PERMANENT)">
+            <option value="Perm Kitsune 💎">Perm Kitsune 💎</option>
+            <option value="Perm Dragon 💎">Perm Dragon 💎</option>
+            <option value="Perm Leopard 💎">Perm Leopard 💎</option>
+            <option value="Perm Yeti 💎">Perm Yeti 💎</option>
+            <option value="Perm Dough 💎">Perm Dough 💎</option>
+            <option value="Perm T-Rex 💎">Perm T-Rex 💎</option>
+            <option value="Perm Portal 💎">Perm Portal 💎</option>
+            <option value="Perm Buddha 💎">Perm Buddha 💎</option>
+            <option value="Perm Magma 💎">Perm Magma 💎</option>
+            <option value="Perm Light 💎">Perm Light 💎</option>
+            <option value="Perm Ice 💎">Perm Ice 💎</option>
+        </optgroup>
+        <optgroup label="🔴 МИФИЧЕСКИЕ ФРУКТЫ (MYTHICAL)">
+            <option value="Kitsune 🦊">Kitsune 🦊</option>
+            <option value="Dragon (Rework) 🐉">Dragon (Rework) 🐉</option>
+            <option value="Yeti ❄️">Yeti ❄️</option>
+            <option value="Leopard 🐆">Leopard 🐆</option>
+            <option value="T-Rex 🦖">T-Rex 🦖</option>
+            <option value="Dough 🍩">Dough 🍩</option>
+            <option value="Mammoth 🦣">Mammoth 🦣</option>
+            <option value="Spirit 👻">Spirit 👻</option>
+            <option value="Control 🎮">Control 🎮</option>
+            <option value="Venom 🧪">Venom 🧪</option>
+            <option value="Shadow 🖤">Shadow 🖤</option>
+            <option value="Gravity 🌌">Gravity 🌌</option>
+        </optgroup>
+        <optgroup label="🟣 ЛЕГЕНДАРНЫЕ ФРУКТЫ (LEGENDARY)">
+            <option value="Gas 💨">Gas 💨</option>
+            <option value="Blizzard ❄️">Blizzard ❄️</option>
+            <option value="Pain 💥">Pain 💥</option>
+            <option value="Rumble ⚡">Rumble ⚡</option>
+            <option value="Portal 🌀">Portal 🌀</option>
+            <option value="Phoenix 🦅">Phoenix 🦅</option>
+            <option value="Sound 🎵">Sound 🎵</option>
+            <option value="Spider 🕸️">Spider 🕸️</option>
+            <option value="Love 💖">Love 💖</option>
+            <option value="Buddha 👑">Buddha 👑</option>
+            <option value="Quake 🌋">Quake 🌋</option>
+        </optgroup>
+        <optgroup label="🔵 РЕДКИЕ ФРУКТЫ (RARE)">
+            <option value="Magma 🌋">Magma 🌋</option>
+            <option value="Ghost 👻">Ghost 👻</option>

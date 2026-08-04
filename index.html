@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BF Swipe Market 2026</title>
+    <title>BF Swipe Market Pro 2026</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
         
-        /* ЖЕЛЕЗОБЕТОННЫЙ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ СТРАНИЦ */
+        /* ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ */
         body { background-color: #121214; color: #ffffff; overflow-y: hidden; }
         
         .swipe-container { 
             display: flex; 
-            width: 200vw; /* 2 экрана бок о бок */
+            width: 200vw; 
             height: 100vh; 
             overflow-x: scroll; 
             scroll-snap-type: x mandatory;
@@ -25,38 +25,37 @@
             scroll-snap-align: start; 
             flex-shrink: 0; 
             padding: 15px; 
-            overflow-y: auto; /* Внутри экрана можно листать вниз */
+            overflow-y: auto; 
         }
 
-        /* ПОДСКАЗКА НАД СТРАНИЦЕЙ */
         .swipe-hint { 
             position: fixed; top: 0; left: 0; width: 100%; text-align: center; 
             font-size: 13px; color: #00e676; z-index: 9999; font-weight: bold;
-            background: rgba(0,0,0,0.8); padding: 6px 0; pointer-events: none;
+            background: rgba(0,0,0,0.85); padding: 6px 0; pointer-events: none;
             border-bottom: 1px solid #333;
         }
 
-        /* ДИСКОРД ЧАТ (ВВЕРХУ) */
-        .discord-container { background: #2f3136; border: 2px solid #5865f2; border-radius: 12px; padding: 15px; width: 100%; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(88,101,242,0.2); }
+        /* ДИСКОРД ЧАТ */
+        .discord-container { background: #2f3136; border: 2px solid #5865f2; border-radius: 12px; padding: 15px; width: 100%; display: flex; flex-direction: column; gap: 10px; }
         .discord-header { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #40444b; padding-bottom: 8px; }
         .discord-avatar { width: 35px; height: 35px; background: #5865f2; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; }
         .discord-status { font-size: 14px; color: #ffffff; font-weight: bold; }
         .discord-status span { color: #3ba55d; font-size: 11px; margin-left: 5px; }
         
-        .discord-chat-wall { background: #36393f; border-radius: 8px; padding: 12px; height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .msg-line { display: flex; flex-direction: column; gap: 2px; font-size: 14px; line-height: 1.4; }
+        .discord-chat-wall { background: #36393f; border-radius: 8px; padding: 12px; height: 150px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .msg-line { display: flex; flex-direction: column; gap: 2px; font-size: 14px; }
         .msg-author { font-weight: bold; font-size: 13px; }
         .msg-bot { color: #5865f2; }
         .msg-you { color: #00e676; }
-        .msg-text { background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 6px; display: inline-block; max-width: 90%; }
+        .msg-text { background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 6px; display: inline-block; }
 
         .discord-input-form { display: flex; gap: 8px; width: 100%; }
         .discord-input { flex: 1; background: #40444b; color: #fff; border: 1px solid #202225; padding: 12px; border-radius: 8px; font-size: 14px; outline: none; }
-        .discord-send-btn { background: #5865f2; color: #fff; border: none; padding: 0 20px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 14px; }
+        .discord-send-btn { background: #5865f2; color: #fff; border: none; padding: 0 20px; font-weight: bold; border-radius: 8px; cursor: pointer; }
 
-        /* ФОРМА ТРЕЙДА С БОЛЬШИМИ СЛОТАМИ */
+        /* КАРТОЧКИ ОБЪЯВЛЕНИЙ */
         .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; width: 100%; }
-        h1 { color: #00e676; font-size: 22px; text-align: center; margin-bottom: 5px; }
+        h1 { color: #00e676; font-size: 20px; text-align: center; margin-bottom: 10px; }
         .info-inputs { display: flex; gap: 10px; margin-bottom: 15px; }
         .input-group { flex: 1; display: flex; flex-direction: column; gap: 5px; }
         label { font-size: 12px; color: #aaa; font-weight: bold; }
@@ -69,12 +68,14 @@
         .slot-row { display: flex; align-items: center; gap: 10px; background: #222227; padding: 6px 10px; border-radius: 8px; border: 1px solid #333; }
         .slot-row span { font-size: 13px; color: #888; font-weight: bold; width: 60px; }
 
-        /* ОГРОМНАЯ КНОПКА ПУБЛИКАЦИИ */
-        .publish-btn { background: #00e676; color: #000; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 8px; text-align: center; width: 100%; margin-top: 10px; border: none; display: block; cursor: pointer; text-decoration: none; user-select: none; }
+        .publish-btn { background: #00e676; color: #000; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 8px; text-align: center; width: 100%; margin-top: 10px; border: none; display: block; cursor: pointer; user-select: none; text-decoration: none; }
         
-        /* СТИЛИ СТРАНИЦЫ ОБЪЯВЛЕНИЙ (ПРАВЫЙ ЭКРАН) */
-        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 12px; min-height: 80vh; }
-        .market-item { background: #222227; padding: 12px; border-radius: 8px; margin-bottom: 5px; border-left: 5px solid #ff9100; }
+        /* КНОПКА УДАЛЕНИЯ */
+        .delete-btn { background: #ff5252; color: #fff; padding: 8px 15px; font-size: 13px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; text-decoration: none; margin-top: 8px; display: inline-block; }
+        .delete-btn:active { background: #e03e3e; }
+
+        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+        .market-item { background: #222227; padding: 12px; border-radius: 8px; margin-bottom: 5px; border-left: 5px solid #ff9100; position: relative; }
         .market-header { display: flex; justify-content: space-between; font-size: 13px; color: #aaa; margin-bottom: 6px; border-bottom: 1px solid #333; padding-bottom: 4px; }
         .fruits-line { margin: 4px 0; font-size: 15px; }
     </style>
@@ -98,20 +99,26 @@
             if (!gt1 && !gt2 && !gt3 && !gt4) { alert("Напишите фрукт в слоты ПОЛУЧИТЬ!"); return; }
             
             let currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            let targetUrl = currentUrl + "?v=22&go=1&nick=" + encodeURIComponent(nick) + "&time=" + encodeURIComponent(time) +
+            let targetUrl = currentUrl + "?v=23&has_offer=1&nick=" + encodeURIComponent(nick) + "&time=" + encodeURIComponent(time) +
                             "&g1=" + encodeURIComponent(g1) + "&g2=" + encodeURIComponent(g2) + "&g3=" + encodeURIComponent(g3) + "&g4=" + encodeURIComponent(g4) +
                             "&gt1=" + encodeURIComponent(gt1) + "&gt2=" + encodeURIComponent(gt2) + "&gt3=" + encodeURIComponent(gt3) + "&gt4=" + encodeURIComponent(gt4);
             
             window.location.href = targetUrl;
         }
 
-        // Авто-перелистывание вправо на Ленту Трейдов после публикации
+        function deleteMyOffer() {
+            // Очищаем адресную строку и возвращаем чистый сайт без оффера
+            let currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            window.location.href = currentUrl + "?v=23";
+        }
+
+        // Авто-скролл влево на главный экран после публикации, чтобы увидеть свой оффер под ДС
         window.onload = function() {
             const params = new URLSearchParams(window.location.search);
-            if (params.get('go') === '1') {
+            if (params.get('has_offer') === '1') {
                 let scroller = document.getElementById('master-scroller');
                 if (scroller) {
-                    scroller.scrollTo({ left: window.innerWidth, behavior: 'instant' });
+                    scroller.scrollTo({ left: 0, behavior: 'instant' });
                 }
             }
         }
@@ -119,12 +126,11 @@
 </head>
 <body>
 
-    <!-- СЕНСОРНАЯ ПОДСКАЗКА -->
-    <div class="swipe-hint">👉 СВАЙПНИ ПАЛЬЦЕМ ЭКРАН ВЛЕВО-ВПРАВО ДЛЯ ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ 👈</div>
+    <div class="swipe-hint">👉 СВАЙПНИ ЭКРАН ВЛЕВО-ВПРАВО ДЛЯ ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ 👈</div>
 
     <div class="swipe-container" id="master-scroller">
         
-        <!-- ================= ЭКРАН 1 (ОСНОВНОЙ): ЧАТ И 4 БОЛЬШИХ СЛОТА ================= -->
+        <!-- ================= ЭКРАН 1 (ОСНОВНОЙ): DISCORD И ВАШ ОФФЕР ПОД НИМ ================= -->
         <div class="screen">
             <div style="margin-top: 35px; display: flex; flex-direction: column; gap: 15px;">
                 
@@ -146,13 +152,9 @@
                         </script>
                     </div>
                     <form method="GET" class="discord-input-form">
-                        <input type="text" name="discord_msg" class="discord-input" placeholder="Написать сообщение в чат..." required>
-                        <button type="submit" class="discord-send-btn">Отправить</button>
-                    </form>
-                </div>
-
-                <!-- ФОРМА СЛОТОВ -->
-                <div class="card">
-                    <h1>BF Fruit & Gamepass Market 2026</h1>
-                    <div class="info-inputs">
-                        <div class="input-group"><label>Ваш никнейм в Roblox:</label><input type="text" id="roblox-nick" placeholder="Например, Trade_King"></div>
+                        <!-- Чтобы при отправке сообщения в ДС оффер не пропадал, пересылаем его параметры скрыто -->
+                        <script>
+                            const uParams = new URLSearchParams(window.location.search);
+                            if(uParams.get('has_offer')) {
+                                document.write(`
+                                    <input type="hidden" name="v" value="23">

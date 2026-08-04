@@ -36,7 +36,7 @@
         label { font-size: 12px; color: #aaa; font-weight: bold; }
         input[type="text"] { background: #2a2a32; color: #fff; border: 1px solid #444; padding: 14px; border-radius: 8px; font-size: 15px; outline: none; width: 100%; }
 
-        .trade-zone { display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; }
+        .trade-zone { display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; width: 100%; }
         .trade-side { background: #16161a; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
         .trade-side.give { border: 2px solid #ff5252; }
         .trade-side.get { border: 2px solid #00e676; }
@@ -62,7 +62,6 @@
         </div>
         
         <div class="discord-chat-wall">
-            <!-- Базовые сообщения чата Дискорда -->
             <div class="msg-line">
                 <span class="msg-author msg-bot">FruitTrader_2026:</span>
                 <span class="msg-text">Привет! Увидел твое объявление на рынке. За сколько отдашь Kitsune? 🦊</span>
@@ -72,7 +71,6 @@
                 <span class="msg-text">Могу предложить взамен геймпас 2x Money 💰 и Dragon Rework! Го обмен?</span>
             </div>
             
-            <!-- Сюда вставляется твой ответ без JavaScript ошибок -->
             <script>
                 const chatParams = new URLSearchParams(window.location.search);
                 const replyText = chatParams.get('discord_msg');
@@ -87,14 +85,13 @@
             </script>
         </div>
         
-        <!-- Железобетонная форма отправки сообщения в Дискорд -->
         <form method="GET" class="discord-input-form">
             <input type="text" name="discord_msg" class="discord-input" placeholder="Написать сообщение в FruitTrader_2026..." required>
             <button type="submit" class="discord-send-btn">Отправить</button>
         </form>
     </div>
 
-    <!-- ================= ФОРМА СОЗДАНИЯ ОБЪЯВЛЕНИЯ ВНИЗУ ================= -->
+    <!-- ================= ФОРМА СОЗДАНИЯ ОБЪЯВЛЕНИЯ ВНИЗУ (РАСШИРЕНА ДО 4 СЛОТОВ) ================= -->
     <div class="card">
         <h1>BF Fruit & Gamepass Market 2026</h1>
         <h2>Пиши фрукты в слоты руками с клавиатуры:</h2>
@@ -106,15 +103,22 @@
             </div>
 
             <div class="trade-zone">
+                <!-- СЛОТЫ Я ОТДАЮ (ОБНОВЛЕНО ДО 4 СЛОТОВ) -->
                 <div class="trade-side give">
                     <h3 style="color: #ff5252; margin-bottom:5px; font-size: 14px; text-align: center; font-weight: bold;">Я ОТДАЮ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><input type="text" name="give1" placeholder="Напиши фрукт"></div>
-                    <div class="slot-row"><span>Слот 2</span><input type="text" name="give2" placeholder="Напиши фрукт"></div>
+                    <div class="slot-row"><span>Слот 1</span><input type="text" name="give1" placeholder="Например, Yeti"></div>
+                    <div class="slot-row"><span>Слот 2</span><input type="text" name="give2" placeholder="Например, Kitsune"></div>
+                    <div class="slot-row"><span>Слот 3</span><input type="text" name="give3" placeholder="Еще один фрукт"></div>
+                    <div class="slot-row"><span>Слот 4</span><input type="text" name="give4" placeholder="Еще один фрукт"></div>
                 </div>
+                
+                <!-- СЛОТЫ Я ХОЧУ (ОБНОВЛЕНО ДО 4 СЛОТОВ) -->
                 <div class="trade-side get">
                     <h3 style="color: #00e676; margin-bottom:5px; font-size: 14px; text-align: center; font-weight: bold;">Я ХОЧУ ПОЛУЧИТЬ:</h3>
-                    <div class="slot-row"><span>Слот 1</span><input type="text" name="get1" placeholder="Напиши фрукт"></div>
-                    <div class="slot-row"><span>Слот 2</span><input type="text" name="get2" placeholder="Напиши фрукт"></div>
+                    <div class="slot-row"><span>Слот 1</span><input type="text" name="get1" placeholder="Например, 2x Money"></div>
+                    <div class="slot-row"><span>Слот 2</span><input type="text" name="get2" placeholder="Например, 2x Storage"></div>
+                    <div class="slot-row"><span>Слот 3</span><input type="text" name="get3" placeholder="Еще один фрукт"></div>
+                    <div class="slot-row"><span>Слот 4</span><input type="text" name="get4" placeholder="Еще один фрукт"></div>
                 </div>
             </div>
             <button type="submit" class="publish-btn">Опубликовать Трейд на рынок</button>
@@ -129,8 +133,8 @@
                 const urlParams = new URLSearchParams(window.location.search);
                 const nick = urlParams.get('nick') || "Аноним";
                 const time = urlParams.get('time') || "В сети прямо сейчас";
-                let giveArr = [urlParams.get('give1'), urlParams.get('give2')].filter(Boolean);
-                let getArr = [urlParams.get('get1'), urlParams.get('get2')].filter(Boolean);
+                let giveArr = [urlParams.get('give1'), urlParams.get('give2'), urlParams.get('give3'), urlParams.get('give4')].filter(Boolean);
+                let getArr = [urlParams.get('get1'), urlParams.get('get2'), urlParams.get('get3'), urlParams.get('get4')].filter(Boolean);
 
                 if (giveArr.length > 0 && getArr.length > 0) {
                     document.write(`
@@ -139,17 +143,3 @@
                             <div class="fruits-line">Отдаёт: <span style="color:#ff5252; font-weight:bold;">${giveArr.join(" + ")}</span></div>
                             <div class="fruits-line">Хочет получить: <span style="color:#00e676; font-weight:bold;">${getArr.join(" + ")}</span></div>
                         </div>
-                    `);
-                }
-            </script>
-            <div class="market-item">
-                <div class="market-header"><span>👤 Продавец: <b>RobloxKing_BF</b></span><span>⏰ Онлайн: Весь день</span></div>
-                <div class="fruits-line">Отдаёт: <span style="color:#ff5252; font-weight:bold;">Perm Yeti 💎 + Kitsune 🦊</span></div>
-                <div class="fruits-line">Хочет получить: <span style="color:#00e676; font-weight:bold;">Dark Blade 🗡️ + Dragon 🐉</span></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-</body>
-</html>

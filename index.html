@@ -2,163 +2,142 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BF Swipe Market 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BF Trade Pro 2026</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        body { background-color: #121214; color: #ffffff; padding: 15px; }
+        .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
         
-        /* СВЕРХНАДЕЖНЫЙ ГОРИЗОНТАЛЬНЫЙ СКРОЛЛ ЭКРАНОВ */
-        body { background-color: #121214; color: #ffffff; overflow-y: hidden; }
-        
-        .swipe-wrapper { 
-            display: flex; 
-            width: 300vw; /* 3 экрана бок о бок */
-            height: 100vh; 
-            overflow-x: scroll; 
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-        }
-        
-        .screen { 
-            width: 100vw; 
-            height: 100vh; 
-            scroll-snap-align: start; 
-            flex-shrink: 0; 
-            padding: 20px; 
-            overflow-y: auto; /* Внутри экрана можно мотать вниз */
-        }
+        .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; width: 100%; }
+        h1 { color: #00e676; font-size: 24px; text-align: center; margin-bottom: 5px; }
+        h2 { font-size: 14px; color: #aaa; margin-bottom: 15px; text-align: center; }
 
-        /* ИНДИКАТОР ПОДСКАЗКА СВЕРХУ */
-        .scroll-hint { 
-            position: fixed; top: 5px; left: 0; width: 100%; text-align: center; 
-            font-size: 12px; color: #00e676; z-index: 1000; font-weight: bold;
-            background: rgba(0,0,0,0.6); padding: 4px 0; pointer-events: none;
-        }
-
-        /* СТИЛИ ПАНЕЛЕЙ */
-        .card { background: #1a1a1e; border: 2px solid #2d2d34; border-radius: 12px; padding: 15px; width: 100%; margin-top: 15px; }
-        h1 { color: #00e676; font-size: 22px; text-align: center; margin-bottom: 10px; }
+        .info-inputs { display: flex; gap: 10px; margin-bottom: 15px; }
+        .input-group { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+        label { font-size: 12px; color: #aaa; font-weight: bold; }
         
-        .inputs-row { display: flex; gap: 10px; margin-bottom: 15px; }
-        .input-box { flex: 1; display: flex; flex-direction: column; gap: 5px; }
-        label { font-size: 12px; color: #ccc; }
-        input[type="text"], input[type="number"] { background: #2a2a32; color: #fff; border: 2px solid #444; padding: 12px; border-radius: 8px; font-size: 15px; outline: none; width: 100%; }
+        /* КРУПНЫЕ ТЕКСТОВЫЕ ПОЛЯ ДЛЯ КЛАВИАТУРЫ */
+        input[type="text"], input[type="number"] { background: #2a2a32; color: #fff; border: 1px solid #444; padding: 14px; border-radius: 8px; font-size: 15px; outline: none; width: 100%; }
+        input[type="text"]:focus { border-color: #00e676; }
 
         .trade-zone { display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; }
-        .trade-block { background: #16161a; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 8px; }
-        .trade-block.give { border: 2px solid #ff5252; }
-        .trade-block.get { border: 2px solid #00e676; }
+        .trade-side { background: #16161a; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 10px; }
+        .trade-side.give { border: 2px solid #ff5252; }
+        .trade-side.get { border: 2px solid #00e676; }
         
-        .slot-line { display: flex; align-items: center; gap: 10px; background: #222227; padding: 8px; border-radius: 8px; border: 1px solid #333; }
-        .slot-line span { font-size: 13px; color: #888; font-weight: bold; width: 50px; }
-        
-        /* СЕЛЕКТОРЫ - ТЕПЕРЬ ОНИ ЖЕЛЕЗНО КЛИКАЮТСЯ */
-        .slot-line select { background: #2a2a32; color: #fff; border: 2px solid #555; padding: 12px; border-radius: 6px; font-size: 15px; outline: none; flex: 1; cursor: pointer; display: block !important; }
+        .slot-row { display: flex; align-items: center; gap: 10px; background: #222227; padding: 6px 10px; border-radius: 8px; border: 1px solid #333; }
+        .slot-row span { font-size: 13px; color: #888; font-weight: bold; width: 60px; }
 
-        .big-action-btn { background-color: #00e676; color: #000000; padding: 18px; font-size: 16px; font-weight: bold; border-radius: 10px; text-align: center; cursor: pointer; width: 100%; border: none; display: block; margin-top: 10px; }
-        .big-action-btn:active { background-color: #00c864; }
+        /* ЖЕЛЕЗОБЕТОННАЯ КНОПКА ОТПРАВКИ ФОРМЫ */
+        .publish-btn { background: #00e676; color: #000; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 8px; text-align: center; width: 100%; margin-top: 10px; border: none; display: block; cursor: pointer; box-shadow: 0 4px 10px rgba(0,230,118,0.2); }
+        .publish-btn:active { background: #00c864; }
 
-        /* СТИЛИ ДЛЯ ЛЕНТЫ ТРЕЙДОВ */
-        .market-card { background: #222227; border-left: 5px solid #ff9100; padding: 15px; border-radius: 8px; margin-bottom: 12px; }
-        .market-card-header { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; border-bottom: 1px solid #333; padding-bottom: 5px; color: #aaa; }
-        .item-text-line { margin: 4px 0; font-size: 14px; }
-        .orange-trade-btn { background: #ff9100; color: #000; padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; margin-top: 5px; }
-
-        /* СМС ЭКРАН */
-        .sms-feed { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
-        .sms-card-item { background: #2a2a32; padding: 14px; border-radius: 8px; font-size: 14px; border-left: 4px solid #00b0ff; line-height: 1.5; }
-
-        /* МОДАЛКА */
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 9999; }
-        .modal-body { background: #1a1a1e; border: 2px solid #2d2d34; padding: 25px; border-radius: 12px; width: 90%; max-width: 450px; display: flex; flex-direction: column; gap: 15px; }
+        /* СПИСОК ОБЪЯВЛЕНИЙ НА РЫНКЕ */
+        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; min-height: 350px; display: flex; flex-direction: column; gap: 12px; }
+        .market-item { background: #222227; border-left: 4px solid #ff9100; padding: 12px; border-radius: 8px; margin-bottom: 5px; }
+        .market-header { display: flex; justify-content: space-between; font-size: 13px; color: #aaa; margin-bottom: 6px; border-bottom: 1px solid #333; padding-bottom: 4px; }
+        .fruits-line { margin: 3px 0; font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <!-- ПОДСКАЗКА ДЛЯ КЛИЕНТА -->
-    <div class="scroll-hint">👈 Свайпай экран влево-вправо пальцем для переключения страниц 👉</div>
-
-    <div class="swipe-wrapper" id="main-scroller">
+<div class="container">
+    
+    <!-- ФОРМА СОЗДАНИЯ ОБЪЯВЛЕНИЯ -->
+    <div class="card">
+        <h1>BF Fruit & Gamepass Market 2026</h1>
+        <h2>Тапай пальцем в Слоты и сам пиши любые фрукты или геймпасы с клавиатуры!</h2>
         
-        <!-- ================= ЭКРАН 1: СОЗДАНИЕ ТРЕЙДА ================= -->
-        <div class="screen" style="background-color: #121214;">
-            <div class="card" style="margin-top: 30px;">
-                <h1>1. Сделать Объявление</h1>
-                <p style="color:#888; font-size:13px; text-align:center; margin-bottom:15px;">Заполни слоты фруктами или геймпасами и жми кнопку ниже</p>
+        <!-- Родная браузерная форма. При нажатии на кнопку страница гарантированно перезагрузится и обновит список -->
+        <form method="GET">
+            <div class="info-inputs">
+                <div class="input-group">
+                    <label>Ваш никнейм в Roblox:</label>
+                    <input type="text" name="nick" placeholder="Например, Trade_King">
+                </div>
+                <div class="input-group">
+                    <label>Когда вы свободны для обмена?</label>
+                    <input type="text" name="time" placeholder="Например: Сейчас в сети">
+                </div>
+            </div>
+
+            <div class="trade-zone">
+                <!-- СЛОТЫ Я ОТДАЮ -->
+                <div class="trade-side give">
+                    <h3 style="color: #ff5252; margin-bottom:5px; font-size: 14px; text-align: center; font-weight: bold;">Я ОТДАЮ (ПИШИ РУКАМИ):</h3>
+                    <div class="slot-row"><span>Слот 1</span><input type="text" name="give1" placeholder="Напиши фрукт или пас"></div>
+                    <div class="slot-row"><span>Слот 2</span><input type="text" name="give2" placeholder="Напиши фрукт или пас"></div>
+                    <div class="slot-row"><span>Слот 3</span><input type="text" name="give3" placeholder="Напиши фрукт или пас"></div>
+                    <div class="slot-row"><span>Слот 4</span><input type="text" name="give4" placeholder="Напиши фрукт или пас"></div>
+                </div>
+
+                <!-- СЛОТЫ Я ХОЧУ -->
+                <div class="trade-side get">
+                    <h3 style="color: #00e676; margin-bottom:5px; font-size: 14px; text-align: center; font-weight: bold;">Я ХОЧУ ПОЛУЧИТЬ (ПИШИ РУКАМИ):</h3>
+                    <div class="slot-row"><span>Слот 1</span><input type="text" name="get1" placeholder="Напиши фрукт или пас"></div>
+                    <div class="slot-row"><span>Слот 2</span><input type="text" name="get2" placeholder="Напиши фрукт или пас"></div>
+                    <div class="slot-row"><span>Слот 3</span><input type="text" name="get3" placeholder="Напиши фрукт или пас"></div>
+                    <div class="slot-row"><span>Слот 4</span><input type="text" name="get4" placeholder="Напиши фрукт или пас"></div>
+                </div>
+            </div>
+            
+            <button type="submit" class="publish-btn">Опубликовать Трейд на рынок</button>
+        </form>
+    </div>
+
+    <!-- ЛЕНТА АКТИВНЫХ ОБЪЯВЛЕНИЙ НА РЫНКЕ -->
+    <div class="chat-container">
+        <h2 style="color: #00e676; text-align: left; font-size: 18px; font-weight: bold;">🛒 Активные предложения на рынке:</h2>
+        <div id="market-list">
+            <!-- Скрипт ниже просто разбирает адресную строку и выводит твои написанные фрукты без JavaScript-ошибок -->
+            <script>
+                const urlParams = new URLSearchParams(window.location.search);
+                const nick = urlParams.get('nick') || "Аноним";
+                const time = urlParams.get('time') || "В сети прямо сейчас";
                 
-                <div class="inputs-row">
-                    <div class="input-box"><label>Ваш ник в Roblox:</label><input type="text" id="input-nick" placeholder="Например, Trade_King"></div>
-                    <div class="input-box"><label>Ваш онлайн:</label><input type="text" id="input-time" placeholder="Например: Сейчас в игре"></div>
-                </div>
+                let giveArr = [urlParams.get('give1'), urlParams.get('give2'), urlParams.get('give3'), urlParams.get('give4')].filter(Boolean);
+                let getArr = [urlParams.get('get1'), urlParams.get('get2'), urlParams.get('get3'), urlParams.get('get4')].filter(Boolean);
 
-                <div class="trade-zone">
-                    <!-- ОТДАЮ -->
-                    <div class="trade-block give">
-                        <h3 style="color: #ff5252;">Я ВТДАЮ (СЛОТЫ 1-4):</h3>
-                        <div class="slot-line"><span>Слот 1</span><select id="give-slot-1"></select></div>
-                        <div class="slot-line"><span>Слот 2</span><select id="give-slot-2"></select></div>
-                        <div class="slot-line"><span>Слот 3</span><select id="give-slot-3"></select></div>
-                        <div class="slot-line"><span>Слот 4</span><select id="give-slot-4"></select></div>
+                let userOfferHTML = "";
+                if (giveArr.length > 0 && getArr.length > 0) {
+                    userOfferHTML = `
+                        <div class="market-item" style="border-left-color: #00e676;">
+                            <div class="market-header">
+                                <span>👤 Продавец: <b style="color: #00e676;">${nick} (Вы)</b></span>
+                                <span>⏰ Онлайн: ${time}</span>
+                            </div>
+                            <div class="fruits-line">Отдаёт: <span style="color:#ff5252; font-weight:bold;">${giveArr.join(" + ")}</span></div>
+                            <div class="fruits-line">Хочет получить: <span style="color:#00e676; font-weight:bold;">${getArr.join(" + ")}</span></div>
+                        </div>
+                    `;
+                }
+
+                // Готовые примеры на рынке на 2026 год, чтобы лента была живой
+                let defaultOffers = `
+                    ${userOfferHTML}
+                    <div class="market-item">
+                        <div class="market-header">
+                            <span>👤 Продавец: <b style="color:#ff9100;">RobloxKing_BF</b></span>
+                            <span>⏰ Онлайн: Свободен весь день</span>
+                        </div>
+                        <div class="fruits-line">Отдаёт: <span style="color:#ff5252; font-weight:bold;">Perm Yeti 💎 + Kitsune 🦊</span></div>
+                        <div class="fruits-line">Хочет получить: <span style="color:#00e676; font-weight:bold;">Dark Blade 🗡️ + Dragon (Rework) 🐉</span></div>
                     </div>
-
-                    <!-- ХОЧУ -->
-                    <div class="trade-block get">
-                        <h3 style="color: #00e676;">Я ХОЧУ ПОЛУЧИТЬ:</h3>
-                        <div class="slot-line"><span>Слот 1</span><select id="get-slot-1"></select></div>
-                        <div class="slot-line"><span>Слот 2</span><select id="get-slot-2"></select></div>
-                        <div class="slot-line"><span>Слот 3</span><select id="get-slot-3"></select></div>
-                        <div class="slot-line"><span>Слот 4</span><select id="get-slot-4"></select></div>
+                    <div class="market-item">
+                        <div class="market-header">
+                            <span>👤 Продавец: <b style="color:#ff9100;">FruitDealer_2026</b></span>
+                            <span>⏰ Онлайн: Сейчас в игре</span>
+                        </div>
+                        <div class="fruits-line">Отдаёт: <span style="color:#ff5252; font-weight:bold;">2x Money 💰 + Gas 💨 + Dough 🍩</span></div>
+                        <div class="fruits-line">Хочет получить: <span style="color:#00e676; font-weight:bold;">Leopard 🐆 + Buddha 👑</span></div>
                     </div>
-                </div>
-                    
-                <button type="button" class="big-action-btn" onclick="publishNewOfferManual()">Опубликовать на рынок</button>
-            </div>
-        </div>
-
-        <!-- ================= ЭКРАН 2: ВСЕ ТРЕЙДЫ НА РЫНКЕ ================= -->
-        <div class="screen" style="background-color: #16161a;">
-            <div style="margin-top: 30px;">
-                <h1>2. Лента всех Трейдов</h1>
-                <p style="color:#888; font-size:13px; text-align:center; margin-bottom:15px;">Здесь показываются предложения. Нажми "Трейд", чтобы написать игроку</p>
-                <div id="market-offers-list"></div>
-            </div>
-        </div>
-
-        <!-- ================= ЭКРАН 3: МОИ СМС И ЧАТЫ ================= -->
-        <div class="screen" style="background-color: #1a1a1e;">
-            <div style="margin-top: 30px;">
-                <h1>3. Мои СМС и Логи</h1>
-                <p style="color:#888; font-size:13px; text-align:center; margin-bottom:15px;">Сюда прилетают отчеты о твоих публикациях и ответы клиентов</p>
-                <div class="sms-feed" id="sms-offers-list"></div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- МОДАЛКА ДЛЯ ОТВЕТА ИГРОКУ -->
-    <div class="modal-overlay" id="popup-trade">
-        <div class="modal-body">
-            <h3 style="color: #ff9100;">🤝 Написать предложение игроку</h3>
-            <p id="popup-seller" style="font-size: 14px; color: #aaa;"></p>
-            <div class="input-box"><label>Ваше сообщение:</label><input type="text" id="popup-note" placeholder="Например: Готов обменять, заходи в игру!"></div>
-            <div class="input-box"><label>Какую выручку предложишь ($):</label><input type="number" id="popup-cash" placeholder="Сумма сделки"></div>
-            <div style="display: flex; gap: 10px; margin-top: 5px;">
-                <button class="big-action-btn" style="background-color: #ff9100; margin: 0; flex: 1;" onclick="sendBuyerTradeManual()">Отправить</button>
-                <button class="big-action-btn" style="background-color: #444; color: #fff; margin: 0; flex: 1;" onclick="closeTradeModalManual()">Отмена</button>
-            </div>
+                `;
+                document.getElementById('market-list').innerHTML = defaultOffers;
+            </script>
         </div>
     </div>
+</div>
 
-<script>
-    // АБСОЛЮТНО ВСЕ АКТУАЛЬНЫЕ ФРУКТЫ И ГЕЙМПАСЫ BLOX FRUITS НА 2026 ГОД [1.1]
-    const fruitsDropdownHTML = `
-        <option value="">[Пустой Слот]</option>
-        <optgroup label="⚡ ВСЕ ГЕЙМПАСЫ (GAMEPASSES)">
-            <option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="Fruit Notifier 🚨">Fruit Notifier 🚨</option>
-            <option value="2x Money 💰">2x Money 💰</option><option value="2x Mastery ✨">2x Mastery ✨</option>
-            <option value="2x Drop Chance 🍀">2x Drop Chance 🍀</option><option value="Fast Boats 🛥️">Fast Boats 🛥️</option>
-            <option value="+1 Fruit Storage 📦">+1 Fruit Storage 📦</option>
-        </optgroup>
-        <optgroup label="💎 ПОСТОЯННЫЕ ФРУКТЫ (PERMANENT)">
-            <option value="Perm Kitsune 💎">Perm Kitsune 💎</option><option value="Perm Dragon 💎">Perm Dragon 💎</option>
-            <option value="Perm Leopard 💎">Perm Leopard 💎</option><option value="Perm Yeti 💎">Perm Yeti 💎</option>
+</body>
+</html>

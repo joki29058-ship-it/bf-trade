@@ -3,98 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BF Trade Market - Исправленный</title>
+    <title>BF Trade Market</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        body { background-color: #121214; color: #ffffff; padding: 8px; }
-        .container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 8px; }
-        .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 10px; padding: 10px; }
+        body { background-color: #121214; color: #ffffff; padding: 10px; }
+        .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
         
-        .seller-stats { display: flex; gap: 6px; background: #222227; border: 1px solid #00e676; padding: 8px; border-radius: 6px; }
+        /* КРАСИВЫЕ КРУПНЫЕ ВКЛАДКИ - БЕЗ НАЛОЖЕНИЙ */
+        .tabs-container { display: flex; gap: 10px; width: 100%; margin-bottom: 5px; }
+        .tab-click { 
+            flex: 1; 
+            background: #2a2a32; 
+            color: #fff; 
+            padding: 15px; 
+            border-radius: 8px; 
+            text-align: center; 
+            font-size: 15px; 
+            font-weight: bold; 
+            border: 1px solid #444; 
+            cursor: pointer;
+            user-select: none;
+        }
+        .tab-click.active { background: #00e676; color: #000; border-color: #00e676; }
+
+        .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; width: 100%; }
+        
+        .seller-stats { display: flex; gap: 8px; background: #222227; border: 1px solid #00e676; padding: 10px; border-radius: 8px; margin-bottom: 12px; }
         .stat-box { flex: 1; text-align: center; }
-        .stat-box span { display: block; font-size: 10px; color: #aaa; }
-        .stat-box strong { font-size: 13px; color: #00e676; }
+        .stat-box span { display: block; font-size: 11px; color: #aaa; }
+        .stat-box strong { font-size: 14px; color: #00e676; }
 
-        .info-inputs { display: flex; gap: 8px; margin-bottom: 8px; }
-        .input-group { flex: 1; display: flex; flex-direction: column; gap: 2px; }
-        label { font-size: 11px; color: #aaa; }
-        input[type="text"], input[type="number"] { background: #2a2a32; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 6px; font-size: 14px; outline: none; width: 100%; }
+        .info-inputs { display: flex; gap: 10px; margin-bottom: 12px; width: 100%; }
+        .input-group { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+        label { font-size: 12px; color: #aaa; }
+        input[type="text"], input[type="number"] { background: #2a2a32; color: #fff; border: 1px solid #444; padding: 12px; border-radius: 6px; font-size: 15px; outline: none; width: 100%; }
 
-        .trade-zone { display: flex; gap: 8px; margin-bottom: 8px; }
-        .trade-side { flex: 1; background: #16161a; padding: 8px; border-radius: 10px; display: flex; flex-direction: column; gap: 5px; }
+        .trade-zone { display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; width: 100%; }
+        .trade-side { background: #16161a; padding: 12px; border-radius: 10px; display: flex; flex-direction: column; gap: 8px; }
         .trade-side.give { border: 2px solid #ff5252; }
         .trade-side.get { border: 2px solid #00e676; }
-        h3 { font-size: 11px; text-align: center; margin-bottom: 2px; font-weight: bold; }
+        h3 { font-size: 13px; text-align: center; font-weight: bold; margin-bottom: 2px; }
         
-        .slot-row { display: flex; align-items: center; gap: 4px; background: #222227; padding: 4px 6px; border-radius: 6px; border: 1px solid #333; }
-        .slot-row span { font-size: 10px; color: #888; width: 40px; }
-        .slot-row select { background: #2a2a32; color: #fff; border: 1px solid #555; padding: 8px 4px; border-radius: 4px; font-size: 13px; outline: none; flex: 1; cursor: pointer; }
+        /* СТРОКИ СЛОТОВ - ТЕПЕРЬ ВСЁ НАЖИМАЕТСЯ НА 100% */
+        .slot-row { display: flex; align-items: center; gap: 10px; background: #222227; padding: 6px 10px; border-radius: 8px; border: 1px solid #333; width: 100%; }
+        .slot-row span { font-size: 12px; color: #888; font-weight: bold; width: 50px; }
+        
+        .slot-row select { 
+            background: #2a2a32; 
+            color: #fff; 
+            border: 1px solid #555; 
+            padding: 10px; 
+            border-radius: 6px; 
+            font-size: 14px; 
+            outline: none; 
+            flex: 1;
+            cursor: pointer;
+            display: block !important;
+            visibility: visible !important;
+        }
 
-        /* ИСПРАВЛЕННЫЕ СЕНСОРНЫЕ КНОПКИ ДЛЯ ПЛАНШЕТА */
-        .touch-btn { 
+        /* ОГРОМНАЯ КНОПКА ПУБЛИКАЦИИ */
+        .publish-btn { 
             background: #00e676; 
             color: #000; 
-            padding: 15px; 
+            padding: 16px; 
             font-size: 16px; 
             font-weight: bold; 
             border-radius: 8px; 
             text-align: center; 
             cursor: pointer; 
             width: 100%;
-            display: block;
             user-select: none;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            margin-top: 5px;
+            box-shadow: 0 4px 10px rgba(0,230,118,0.2);
         }
-        .touch-btn:active { background: #00c864; transform: scale(0.98); }
+        .publish-btn:active { background: #00c864; }
         
-        /* Вкладки переключения */
-        .tabs { display: flex; gap: 6px; margin-bottom: 4px; }
-        .tab-touch-btn { 
-            background: #2a2a32; 
-            color: #fff; 
-            padding: 12px; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            border: 1px solid #444; 
-            font-size: 14px; 
-            flex: 1; 
-            text-align: center;
-            font-weight: bold;
-        }
-        .tab-touch-btn.active { background: #00e676; color: #000; border-color: #00e676; }
-        
-        .view-section { display: none; }
+        /* СЕКЦИИ ВКЛАДОК */
+        .view-section { display: none; width: 100%; }
         .view-section.active { display: block; }
         
-        .trade-item { background: #222227; border-left: 4px solid #00e676; padding: 12px; border-radius: 6px; margin-bottom: 8px; }
-        .trade-header { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
-        .trade-content { display: flex; justify-content: space-between; align-items: center; }
-        .fruits-line { margin: 2px 0; font-size: 13px; }
+        /* ЛЕНТА РЫНКА */
+        .trade-item { background: #222227; border-left: 4px solid #00e676; padding: 15px; border-radius: 8px; margin-bottom: 12px; width: 100%; }
+        .trade-header { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 8px; border-bottom: 1px solid #333; padding-bottom: 6px; }
+        .trade-content { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+        .fruits-line { margin: 4px 0; font-size: 14px; }
         
-        .trade-action-btn { background: #ff9100; color: #000; padding: 10px 15px; font-size: 13px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
+        .trade-action-btn { background: #ff9100; color: #000; padding: 12px 22px; font-size: 14px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
         
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 100; }
-        .modal-content { background: #1a1a1e; border: 1px solid #2d2d34; padding: 20px; border-radius: 12px; width: 90%; max-width: 440px; display: flex; flex-direction: column; gap: 12px; }
-        .rating-stars { display: flex; gap: 6px; }
-        .star { font-size: 24px; color: #444; cursor: pointer; }
+        /* МОДАЛКА ТРЕЙДА */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 999; }
+        .modal-content { background: #1a1a1e; border: 1px solid #2d2d34; padding: 25px; border-radius: 12px; width: 90%; max-width: 450px; display: flex; flex-direction: column; gap: 15px; }
+        .rating-stars { display: flex; gap: 8px; margin: 5px 0; }
+        .star { font-size: 30px; color: #444; cursor: pointer; }
         .star.active { color: #ffca28; }
 
-        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 12px; height: 360px; display: flex; flex-direction: column; }
+        /* СМС КОНТЕЙНЕР */
+        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; height: 420px; display: flex; flex-direction: column; width: 100%; }
         .chat-messages { flex: 1; overflow-y: auto; }
-        .sms-item { background: #2a2a32; padding: 10px; border-radius: 8px; margin-bottom: 6px; font-size: 13px; border-left: 4px solid #00b0ff; line-height: 1.4; }
-        .sms-item.buyer-offer { border-left-color: #ff9100; background: #222227; }
+        .sms-item { background: #2a2a32; padding: 12px; border-radius: 8px; margin-bottom: 8px; font-size: 14px; border-left: 4px solid #00b0ff; line-height: 1.5; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- ИСПРАВЛЕННЫЕ НАЖИМАЕМЫЕ ВКЛАДКИ -->
-    <div class="tabs">
-        <div class="tab-touch-btn active" id="market-tab-btn" onclick="switchTab('market')">🛒 Ринок Пропозицій</div>
-        <div class="tab-touch-btn" id="sms-tab-btn" onclick="switchTab('sms')">💬 Мої СМС / Чати</div>
+    
+    <!-- ПОЛНОСТЬЮ РАБОЧИЕ НЕЗАВИСИМЫЕ ВКЛАДКИ -->
+    <div class="tabs-container">
+        <div class="tab-click active" id="market-tab-btn" onclick="handleTabClick('market')">🛒 Ринок Пропозицій</div>
+        <div class="tab-click" id="sms-tab-btn" onclick="handleTabClick('sms')">💬 Мої СМС / Чати</div>
     </div>
 
-    <!-- ВКЛАДКА: РИНОК -->
+    <!-- РАЗДЕЛ 1: РЫНОК -->
     <div id="market-section" class="view-section active">
         <div class="seller-stats">
             <div class="stat-box"><span>Ваша роль</span><strong>Учасник біржі</strong></div>
@@ -116,19 +136,18 @@
             </div>
 
             <div class="trade-zone">
-                <!-- СЛОТЫ ОТДАЮ -->
+                <!-- СЛОТЫ Я ОТДАЮ -->
                 <div class="trade-side give">
                     <h3 style="color: #ff5252;">Я ВІДДАЮ:</h3>
-                    <!-- Генерация слотов с АБСОЛЮТНО ВСЕМИ фруктами -->
                     <div class="slot-row"><span>Слот 1</span><select id="give-1"></select></div>
                     <div class="slot-row"><span>Слот 2</span><select id="give-2"></select></div>
                     <div class="slot-row"><span>Слот 3</span><select id="give-3"></select></div>
                     <div class="slot-row"><span>Слот 4</span><select id="give-4"></select></div>
                 </div>
 
-                <!-- СЛОТЫ ХОЧУ -->
+                <!-- СЛОТЫ Я ХОЧУ -->
                 <div class="trade-side get">
-                    <h3 style="color: #00e676;">Я ХОЧУ:</h3>
+                    <h3 style="color: #00e676;">Я ХОЧУ ОТРИМАТИ:</h3>
                     <div class="slot-row"><span>Слот 1</span><select id="get-1"></select></div>
                     <div class="slot-row"><span>Слот 2</span><select id="get-2"></select></div>
                     <div class="slot-row"><span>Слот 3</span><select id="get-3"></select></div>
@@ -136,17 +155,17 @@
                 </div>
             </div>
                 
-            <!-- МОБИЛЬНАЯ СЕНСОРНАЯ КНОПКА ОБНОВЛЕНА -->
-            <div class="touch-btn" onclick="createMarketOffer()">Опублікувати на ринок</div>
+            <!-- НАЖИМАЕМАЯ СЕНСОРНАЯ КНОПКА ПУБЛИКАЦИИ -->
+            <div class="publish-btn" onclick="triggerPublish()">Опублікувати на ринок</div>
         </div>
 
-        <div class="card" style="margin-top: 10px;">
+        <div class="card" style="margin-top: 15px;">
             <h2>Активні оголошення на ринку</h2>
             <div id="trades-list"></div>
         </div>
     </div>
 
-    <!-- ВКЛАДКА: СМС -->
+    <!-- РАЗДЕЛ 2: СМС -->
     <div id="sms-section" class="view-section">
         <div class="chat-container">
             <h2>Вхідні СМС-пропозиції від покупців</h2>
@@ -155,6 +174,7 @@
     </div>
 </div>
 
+<!-- МОДАЛКА -->
 <div class="modal" id="trade-modal">
     <div class="modal-content">
         <h3 style="color: #ff9100;">🤝 Оформити Трейд</h3>
@@ -167,15 +187,4 @@
                 <span class="star active" onclick="setModalRating(1)">★</span><span class="star active" onclick="setModalRating(2)">★</span><span class="star active" onclick="setModalRating(3)">★</span><span class="star active" onclick="setModalRating(4)">★</span><span class="star active" onclick="setModalRating(5)">★</span>
             </div>
         </div>
-        <div style="display: flex; gap: 8px; margin-top: 5px;">
-            <div class="touch-btn" style="background: #ff9100; padding: 10px; flex: 1;" onclick="submitBuyerTrade()">Надіслати</div>
-            <div class="touch-btn" style="background: #444; color: #fff; padding: 10px; flex: 1;" onclick="closeModal()">Скасувати</div>
-        </div>
-    </div>
-</div>
-
-<script>
-    // АБСОЛЮТНО ВСЕ ФРУКТЫ ИЗ ИГРЫ (ОТ МИФИЧЕСКИХ ДО ОБЫЧНЫХ) + ГЕЙМПАСЫ [1.1]
-    const allFruitsOptions = `
-        <option value="">[Порожньо]</option>
-        <optgroup label="⚡ ГЕЙМПАСИ / ПЕРМИ">
+        <div style="display: flex; gap: 10px; margin-top: 10px;">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BF Trade Market - Компактні Слоти</title>
+    <title>BF Trade Market - Без Багів</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
         body { background-color: #121214; color: #ffffff; padding: 10px; }
@@ -20,14 +20,12 @@
         label { font-size: 11px; color: #aaa; }
         input[type="text"], input[type="number"] { background: #2a2a32; color: #fff; border: 1px solid #444; padding: 8px; border-radius: 6px; font-size: 14px; outline: none; }
 
-        /* КОМПАКТНЫЕ РАМКИ БОК О БОК */
         .trade-zone { display: flex; gap: 10px; margin-bottom: 10px; }
         .trade-side { flex: 1; background: #16161a; padding: 10px; border-radius: 10px; display: flex; flex-direction: column; gap: 6px; }
         .trade-side.give { border: 2px solid #ff5252; }
         .trade-side.get { border: 2px solid #00e676; }
         h3 { font-size: 12px; text-align: center; margin-bottom: 2px; }
         
-        /* Узкие строчки слотов */
         .slot-row { display: flex; align-items: center; gap: 5px; background: #222227; padding: 4px 8px; border-radius: 6px; border: 1px solid #333; }
         .slot-row span { font-size: 11px; color: #888; width: 45px; }
         .slot-row select { background: #2a2a32; color: #fff; border: 1px solid #555; padding: 6px; border-radius: 4px; font-size: 13px; outline: none; flex: 1; cursor: pointer; }
@@ -37,24 +35,26 @@
         .tabs { display: flex; gap: 8px; }
         .tab-btn { background: #2a2a32; color: #fff; padding: 8px 15px; border-radius: 6px; cursor: pointer; border: 1px solid #444; font-size: 13px; flex: 1; text-align: center; }
         .tab-btn.active { background: #00e676; color: #000; font-weight: bold; }
+        
         .view-section { display: none; }
         .view-section.active { display: block; }
         
         .trade-item { background: #222227; border-left: 4px solid #00e676; padding: 12px; border-radius: 6px; margin-bottom: 10px; }
         .trade-header { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 5px; }
         .trade-content { display: flex; justify-content: space-between; align-items: center; }
+        .fruits-line { margin: 4px 0; font-size: 14px; }
         
         .trade-action-btn { background: #ff9100; color: #000; padding: 8px 15px; font-size: 13px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
         
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 100; }
         .modal-content { background: #1a1a1e; border: 1px solid #2d2d34; padding: 20px; border-radius: 12px; width: 90%; max-width: 440px; display: flex; flex-direction: column; gap: 12px; }
         .rating-stars { display: flex; gap: 6px; }
-        .star { font-size: 24px; color: #444; }
+        .star { font-size: 24px; color: #444; cursor: pointer; }
         .star.active { color: #ffca28; }
 
         .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; height: 350px; display: flex; flex-direction: column; }
         .chat-messages { flex: 1; overflow-y: auto; }
-        .sms-item { background: #2a2a32; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; font-size: 13px; border-left: 4px solid #00b0ff; }
+        .sms-item { background: #2a2a32; padding: 10px 12px; border-radius: 8px; margin-bottom: 8px; font-size: 13px; border-left: 4px solid #00b0ff; line-height: 1.4; }
         .sms-item.buyer-offer { border-left-color: #ff9100; background: #222227; }
     </style>
 </head>
@@ -62,13 +62,14 @@
 
 <div class="container">
     <div class="tabs">
-        <div class="tab-btn active" id="market-tab-btn" onclick="switchTab('market')">🛒 Ринок Пропозицій</div>
-        <div class="tab-btn" id="sms-tab-btn" onclick="switchTab('sms')">💬 Мої СМС / Чати</div>
+        <button class="tab-btn active" id="market-tab-btn" onclick="switchTab('market')">🛒 Ринок Пропозицій</button>
+        <button class="tab-btn" id="sms-tab-btn" onclick="switchTab('sms')">💬 Мої СМС / Чати</button>
     </div>
 
+    <!-- ВКЛАДКА: РИНОК -->
     <div id="market-section" class="view-section active">
         <div class="seller-stats">
-            <div class="stat-box"><span>Ваша роль</span><strong>Учасник біржі</strong></div>
+            <div class="stat-box"><span>Ваша роль</span><strong>Учасникі біржі</strong></div>
             <div class="stat-box"><span>Успішні угоди</span><strong id="total-trades-count">0</strong></div>
             <div class="stat-box"><span>Загальна виручка</span><strong id="total-revenue-count">0 $</strong></div>
             <div class="stat-box"><span>Ваш рейтинг</span><strong id="total-rating-value" style="color: #ffca28;">⭐ 5.0</strong></div>
@@ -78,30 +79,29 @@
             <div class="info-inputs">
                 <div class="input-group">
                     <label>Ваш нікнейм у Roblox:</label>
-                    <input type="text" id="roblox-nick" placeholder="Наприклад, Trade_Master" required>
+                    <input type="text" id="roblox-nick" placeholder="Наприклад, Trade_Master">
                 </div>
                 <div class="input-group">
                     <label>Коли ви вільні для обміну?</label>
-                    <input type="text" id="online-time" placeholder="Наприклад: Зараз у грі" required>
+                    <input type="text" id="online-time" placeholder="Наприклад: Зараз у грі">
                 </div>
             </div>
 
-            <!-- ИСПРАВЛЕННАЯ СЕТКА СЛОТОВ БОК О БОК -->
             <div class="trade-zone">
                 <div class="trade-side give">
                     <h3 style="color: #ff5252;">Я ВІДДАЮ:</h3>
                     <div class="slot-row"><span>Слот 1</span><select id="give-1"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
                     <div class="slot-row"><span>Слот 2</span><select id="give-2"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
-                    <div class="slot-row"><span>Слот 3</span><select id="give-3"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
-                    <div class="slot-row"><span>Слот 4</span><select id="give-4"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                    <div class="slot-row"><span>Слот 3</span><select id="give-3"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
+                    <div class="slot-row"><span>Слот 4</span><select id="give-4"><option value="">[Порожньо]</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
                 </div>
 
                 <div class="trade-side get">
                     <h3 style="color: #00e676;">Я ХОЧУ ОТРИМАТИ:</h3>
                     <div class="slot-row"><span>Слот 1</span><select id="get-1"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
-                    <div class="slot-row"><span>Слот 2</span><select id="get-2"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
-                    <div class="slot-row"><span>Слот 3</span><select id="get-3"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
-                    <div class="slot-row"><span>Слот 4</span><select id="get-4"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option></select></div>
+                    <div class="slot-row"><span>Слот 2</span><select id="get-2"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
+                    <div class="slot-row"><span>Слот 3</span><select id="get-3"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
+                    <div class="slot-row"><span>Слот 4</span><select id="get-4"><option value="">[Порожньо]</option><option value="Dragon 🐉">Dragon 🐉</option><option value="Kitsune 🦊">Kitsune 🦊</option><option value="Leopard 🐆">Leopard 🐆</option><option value="Dough 🍩">Dough 🍩</option><option value="Dark Blade 🗡️">Dark Blade 🗡️</option><option value="2x Money 💰">2x Money 💰</option></select></div>
                 </div>
             </div>
                 
@@ -114,6 +114,7 @@
         </div>
     </div>
 
+    <!-- ВКЛАДКА: СМС -->
     <div id="sms-section" class="view-section">
         <div class="chat-container">
             <h2>Вхідні СМС-пропозиції від покупців</h2>
@@ -123,6 +124,3 @@
 </div>
 
 <div class="modal" id="trade-modal">
-    <div class="modal-content">
-        <h3 style="color: #ff9100;">🤝 Оформити Трейд</h3>
-        <p id="modal-seller-info" style="font-size: 13px; color: #aaa;"></p>

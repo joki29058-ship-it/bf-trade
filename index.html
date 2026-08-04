@@ -43,16 +43,51 @@
         .slot-row { display: flex; align-items: center; gap: 10px; background: #222227; padding: 6px 10px; border-radius: 8px; border: 1px solid #333; }
         .slot-row span { font-size: 13px; color: #888; font-weight: bold; width: 60px; }
 
-        /* НАДЁЖНАЯ ССЫЛКА-КНОПКА */
+        /* КНОПКА ПУБЛИКАЦИИ */
         .publish-btn { background: #00e676; color: #000; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 8px; text-align: center; width: 100%; margin-top: 10px; border: none; display: block; cursor: pointer; text-decoration: none; user-select: none; }
         .publish-btn:active { background: #00c864; }
         
-        /* КРАСИВЫЕ КАРТОЧКИ ОБЪЯВЛЕНИЙ В САМОМ НИЗУ */
+        /* КАРТОЧКИ ОБЪЯВЛЕНИЙ В САМОМ НИЗУ */
         .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
         .market-item { background: #222227; padding: 12px; border-radius: 8px; margin-bottom: 5px; border-left: 5px solid #ff9100; }
         .market-header { display: flex; justify-content: space-between; font-size: 13px; color: #aaa; margin-bottom: 6px; border-bottom: 1px solid #333; padding-bottom: 4px; }
         .fruits-line { margin: 4px 0; font-size: 15px; }
     </style>
+    
+    <!-- ГЛАВНЫЙ НАДЁЖНЫЙ СКРИПТ (ВЫНЕСЕН НАВЕРХ) -->
+    <script>
+        function submitTradeManual() {
+            let nick = document.getElementById('roblox-nick').value.trim() || "Игрок";
+            let time = document.getElementById('online-time').value.trim() || "Сейчас в игре";
+            
+            let g1 = document.getElementById('give1').value.trim();
+            let g2 = document.getElementById('give2').value.trim();
+            let g3 = document.getElementById('give3').value.trim();
+            let g4 = document.getElementById('give4').value.trim();
+            
+            let gt1 = document.getElementById('get1').value.trim();
+            let gt2 = document.getElementById('get2').value.trim();
+            let gt3 = document.getElementById('get3').value.trim();
+            let gt4 = document.getElementById('get4').value.trim();
+
+            if (!g1 && !g2 && !g3 && !g4) {
+                alert("Пожалуйста, напишите хотя бы один свой фрукт в слоты ОТДАЮ!");
+                return;
+            }
+            if (!gt1 && !gt2 && !gt3 && !gt4) {
+                alert("Пожалуйста, напишите что вы хотите получить взамен!");
+                return;
+            }
+            
+            // Формируем чистую рабочую ссылку для перезагрузки
+            let currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+            let targetUrl = currentUrl + "?v=20&nick=" + encodeURIComponent(nick) + "&time=" + encodeURIComponent(time) +
+                            "&g1=" + encodeURIComponent(g1) + "&g2=" + encodeURIComponent(g2) + "&g3=" + encodeURIComponent(g3) + "&g4=" + encodeURIComponent(g4) +
+                            "&gt1=" + encodeURIComponent(gt1) + "&gt2=" + encodeURIComponent(gt2) + "&gt3=" + encodeURIComponent(gt3) + "&gt4=" + encodeURIComponent(gt4);
+            
+            window.location.href = targetUrl;
+        }
+    </script>
 </head>
 <body>
 
@@ -68,7 +103,7 @@
         <div class="discord-chat-wall">
             <div class="msg-line">
                 <span class="msg-author msg-bot">FruitTrader_2026:</span>
-                <span class="msg-text">Привет! Увидел твое объявиление на рынке. За сколько отдашь Kitsune? 🦊</span>
+                <span class="msg-text">Привет! Увидел твое объявление на рынке. За сколько отдашь Kitsune? 🦊</span>
             </div>
             <div class="msg-line">
                 <span class="msg-author msg-bot">FruitTrader_2026:</span>
@@ -117,30 +152,3 @@
             <div class="trade-side get">
                 <h3 style="color: #00e676; margin-bottom:5px; font-size: 14px; text-align: center; font-weight: bold;">Я ХОЧУ ПОЛУЧИТЬ:</h3>
                 <div class="slot-row"><span>Слот 1</span><input type="text" id="get1" placeholder="Например, 2x Money"></div>
-                <div class="slot-row"><span>Слот 2</span><input type="text" id="get2" placeholder="Например, 2x Storage"></div>
-                <div class="slot-row"><span>Слот 3</span><input type="text" id="get3" placeholder="Еще один фрукт"></div>
-                <div class="slot-row"><span>Слот 4</span><input type="text" id="get4" placeholder="Еще один фрукт"></div>
-            </div>
-        </div>
-        <!-- Неубиваемая функция ручного редиректа -->
-        <a class="publish-btn" onclick="submitTradeManual()">Опубликовать Трейд на рынок</a>
-    </div>
-
-    <!-- ================= 3. ЛЕНТА АКТИВНЫХ ОБЪЯВЛЕНИЙ (В САМОМ НИЗУ) ================= -->
-    <div class="chat-container">
-        <h2 style="color: #00e676; text-align: left; font-size: 18px; font-weight: bold;">🛒 Активные предложения на рынке:</h2>
-        <div id="market-list">
-            
-            <script>
-                const urlParams = new URLSearchParams(window.location.search);
-                const uNick = urlParams.get('nick');
-                const uTime = urlParams.get('time') || "Сейчас в игре";
-                
-                let giveArr = [urlParams.get('g1'), urlParams.get('g2'), urlParams.get('g3'), urlParams.get('g4')].filter(Boolean);
-                let getArr = [urlParams.get('gt1'), urlParams.get('get2'), urlParams.get('gt3'), urlParams.get('gt4')].filter(Boolean);
-
-                if (giveArr.length > 0 && getArr.length > 0) {
-                    document.write(`
-                        <div class="market-item" style="border-left-color: #00e676; background: rgba(0,230,118,0.05);">
-                            <div class="market-header"><span>👤 Продавец: <b style="color: #00e676;">${uNick || "Вы (Трейдер)"}</b></span><span>⏰ Онлайн: ${uTime}</span></div>
-                            <div class="fruits-line">Отдаёт: <span style="color:#ff5252; font-weight:bold;">${giveArr.join(" + ")}</span></div>

@@ -3,89 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BF Trade Market - 4 Квадрати-Слоти</title>
+    <title>BF Trade Market - 4 Слоти</title>
     <style>
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
-        body { background-color: #121214; color: #ffffff; padding: 20px; }
-        header { text-align: center; margin-bottom: 25px; }
-        h1 { color: #00e676; font-size: 28px; }
-        .container { max-width: 950px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
-        .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        body { background-color: #121214; color: #ffffff; padding: 15px; }
+        header { text-align: center; margin-bottom: 20px; }
+        h1 { color: #00e676; font-size: 26px; }
+        .container { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+        .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 20px; }
         h2 { font-size: 18px; margin-bottom: 15px; color: #b3b3b3; }
         
-        /* Статистика профілю */
-        .seller-stats { display: flex; gap: 15px; background: #222227; border: 1px solid #00e676; padding: 15px; border-radius: 8px; margin-bottom: 15px; }
+        .seller-stats { display: flex; gap: 10px; background: #222227; border: 1px solid #00e676; padding: 12px; border-radius: 8px; margin-bottom: 10px; }
         .stat-box { flex: 1; text-align: center; }
-        .stat-box span { display: block; font-size: 12px; color: #aaa; }
-        .stat-box strong { font-size: 18px; color: #00e676; }
+        .stat-box span { display: block; font-size: 11px; color: #aaa; }
+        .stat-box strong { font-size: 16px; color: #00e676; }
 
-        /* Поля вводу тексту */
-        .info-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; border-bottom: 1px solid #2d2d34; padding-bottom: 15px; }
-        .input-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; }
-        input[type="text"], input[type="number"] { background: #2a2a32; color: #fff; border: 1px solid #444; padding: 10px; border-radius: 6px; font-size: 15px; outline: none; width: 100%; }
-        input:focus, select:focus { border-color: #00e676; }
+        .info-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        .input-group { display: flex; flex-direction: column; gap: 5px; }
+        input[type="text"], input[type="number"] { background: #2a2a32; color: #fff; border: 1px solid #444; padding: 12px; border-radius: 6px; font-size: 15px; outline: none; width: 100%; }
 
-        /* ЗОНА ТРЕЙДУ: 4 КВАДРАТНІ СЛОТИ ДЛЯ ПРЕДМЕТІВ */
-        .trade-zone { display: flex; flex-wrap: wrap; gap: 20px; margin-bottom: 20px; }
-        .trade-side { flex: 1; min-width: 320px; background: #16161a; padding: 15px; border-radius: 12px; }
-        .trade-side.give { border: 2px solid #ff5252; box-shadow: 0 0 10px rgba(255,82,82,0.1); }
-        .trade-side.get { border: 2px solid #00e676; box-shadow: 0 0 10px rgba(0,230,118,0.1); }
+        /* ИСПРАВЛЕННАЯ ЗОНА СЛОТОВ */
+        .trade-zone { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 15px; }
+        .trade-side { flex: 1; min-width: 290px; background: #16161a; padding: 15px; border-radius: 12px; }
+        .trade-side.give { border: 2px solid #ff5252; }
+        .trade-side.get { border: 2px solid #00e676; }
         
-        /* Сітка з 4 великих квадратів */
-        .slots-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        /* Сетка слотов */
+        .slots-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
         
-        /* Стиль самого квадратика-слота */
+        /* Исправленный квадратный слот - теперь он идеально реагирует на тапы */
         .fruit-slot { 
             background: #222227; 
             border: 2px dashed #444; 
             border-radius: 10px; 
-            padding: 15px; 
-            height: 110px; 
+            padding: 10px; 
+            min-height: 90px; 
             display: flex; 
             flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            gap: 8px;
-            transition: 0.2s;
+            justify-content: space-between; 
+            align-items: center;
         }
-        .trade-side.give .fruit-slot:hover { border-color: #ff5252; background: #291e20; }
-        .trade-side.get .fruit-slot:hover { border-color: #00e676; background: #1e2922; }
+        .slot-title { font-size: 11px; color: #888; font-weight: bold; margin-bottom: 5px; }
         
-        .slot-title { font-size: 11px; color: #888; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
-        .fruit-slot select { background: #2a2a32; color: #fff; border: 1px solid #555; padding: 6px; border-radius: 6px; font-size: 13px; outline: none; width: 100%; text-align: center; }
+        /* Списки теперь крупные и легко нажимаются пальцем */
+        .fruit-slot select { 
+            background: #2a2a32; 
+            color: #fff; 
+            border: 1px solid #666; 
+            padding: 10px 5px; 
+            border-radius: 6px; 
+            font-size: 14px; 
+            outline: none; 
+            width: 100%; 
+            cursor: pointer;
+            -webkit-appearance: none; /* Убирает баги на планшетах */
+        }
 
         .main-btn { background: #00e676; color: #000; border: none; padding: 14px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; }
         .main-btn:hover { background: #00c864; }
         
-        /* Навігаційні вкладки */
         .tabs { display: flex; gap: 10px; }
         .tab-btn { background: #2a2a32; color: #fff; padding: 10px 20px; border-radius: 6px; cursor: pointer; border: 1px solid #444; font-size: 14px; }
         .tab-btn.active { background: #00e676; color: #000; font-weight: bold; }
-        
         .view-section { display: none; }
         .view-section.active { display: block; }
         
-        /* Ринкові картки */
         .trade-item { background: #222227; border-left: 4px solid #00e676; padding: 15px; border-radius: 6px; margin-bottom: 12px; display: flex; flex-direction: column; gap: 10px; }
         .trade-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 8px; }
         .seller-info { font-size: 14px; }
         .trade-content { display: flex; justify-content: space-between; align-items: center; }
         .fruits-line { margin: 4px 0; font-size: 15px; }
-        .fruits-line span { font-weight: bold; }
         
-        /* Кнопка ТРЕЙД */
         .trade-action-btn { background: #ff9100; color: #000; padding: 12px 24px; font-size: 15px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; }
-        .trade-action-btn:hover { background: #ffa726; }
         
-        /* Вікно Покупця */
+        /* Модалка */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 100; }
         .modal-content { background: #1a1a1e; border: 1px solid #2d2d34; padding: 25px; border-radius: 12px; width: 90%; max-width: 480px; display: flex; flex-direction: column; gap: 15px; }
         .rating-stars { display: flex; gap: 8px; margin: 5px 0; cursor: pointer; }
         .star { font-size: 30px; color: #444; }
         .star.active { color: #ffca28; }
 
-        /* Вікно СМС чату */
-        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 20px; height: 450px; display: flex; flex-direction: column; }
+        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 20px; height: 400px; display: flex; flex-direction: column; }
         .chat-messages { flex: 1; overflow-y: auto; }
         .sms-item { background: #2a2a32; padding: 12px 15px; border-radius: 8px; margin-bottom: 10px; font-size: 14px; border-left: 4px solid #00b0ff; line-height: 1.5; }
         .sms-item.buyer-offer { border-left-color: #ff9100; background: #222227; }
@@ -95,19 +93,17 @@
 
 <header>
     <h1>BF Trade Market Pro</h1>
-    <p style="color: #888; font-size: 14px; margin-top: 5px;">Повноцінні 4 ігрові слоти-квадрати для фруктів 🍉 та геймпасів ⚡</p>
+    <p style="color: #888; font-size: 13px; margin-top: 5px;">Обновление: исправлено нажатие строчек на планшетах [1.1]</p>
 </header>
 
 <div class="container">
     
     <div class="tabs">
         <div class="tab-btn active" id="market-tab-btn" onclick="switchTab('market')">🛒 Ринок Пропозицій</div>
-        <div class="tab-btn" id="sms-tab-btn" onclick="switchTab('sms')">💬 Мої СМС / Чати (Сповіщення)</div>
+        <div class="tab-btn" id="sms-tab-btn" onclick="switchTab('sms')">💬 Мої СМС / Чати</div>
     </div>
 
-    <!-- ВКЛАДКА: РИНОК -->
     <div id="market-section" class="view-section active">
-        
         <div class="seller-stats">
             <div class="stat-box"><span>Ваша роль</span><strong>Учасник біржі</strong></div>
             <div class="stat-box"><span>Успішні угоди</span><strong id="total-trades-count">0</strong></div>
@@ -115,11 +111,10 @@
             <div class="stat-box"><span>Ваш рейтинг</span><strong id="total-rating-value" style="color: #ffca28;">⭐ 5.0</strong></div>
         </div>
 
-        <!-- Форма Створення оголошення -->
         <div class="card">
             <h2>Створити нове оголошення</h2>
             
-            <div class="info-inputs" style="border-bottom: none; margin-bottom: 0; padding-bottom: 0;">
+            <div class="info-inputs">
                 <div class="input-group">
                     <label>Ваш нікнейм у Roblox:</label>
                     <input type="text" id="roblox-nick" placeholder="Наприклад, Trade_Master" required>
@@ -130,25 +125,17 @@
                 </div>
             </div>
 
-            <!-- ЗОНА КВАДРАТНИХ СЛОТІВ -->
+            <!-- ИСПРАВЛЕННЫЕ КВАДРАТНЫЕ СЛОТЫ -->
             <div class="trade-zone">
-                
-                <!-- Ліва сторона: Що віддає (4 Квадрати) -->
                 <div class="trade-side give">
                     <h3 style="font-size: 14px; color: #ff5252; text-align: center;">Я ВІДДАЮ:</h3>
-                    <div class="slots-grid" id="give-slots-container">
-                        <!-- Квадрати додадуться через скрипт нижче -->
-                    </div>
+                    <div class="slots-grid" id="give-slots-container"></div>
                 </div>
 
-                <!-- Права сторона: Що хоче (4 Квадрати) -->
                 <div class="trade-side get">
                     <h3 style="font-size: 14px; color: #00e676; text-align: center;">Я ХОЧУ ОТРИМАТИ:</h3>
-                    <div class="slots-grid" id="get-slots-container">
-                        <!-- Квадрати додадуться через скрипт нижче -->
-                    </div>
+                    <div class="slots-grid" id="get-slots-container"></div>
                 </div>
-
             </div>
 
             <button class="main-btn" onclick="createMarketOffer()">Опублікувати на ринок</button>
@@ -160,29 +147,40 @@
         </div>
     </div>
 
-    <!-- ВКЛАДКА: СМС ЧАТИ -->
     <div id="sms-section" class="view-section">
         <div class="chat-container">
             <h2>Вхідні СМС-пропозиції, листи та відгуки від покупців</h2>
             <div class="chat-messages" id="sms-list"></div>
         </div>
     </div>
+</div>
 
-<!-- Модальне вікно Трейду -->
 <div class="modal" id="trade-modal">
     <div class="modal-content">
         <h3 style="color: #ff9100;">🤝 Оформити Трейд</h3>
         <p id="modal-seller-info" style="font-size: 14px; color: #aaa; margin-bottom: 5px;"></p>
-        
+        <div class="input-group"><label>Ваш Лист продавцю:</label><input type="text" id="buyer-note" placeholder="Наприклад: Готовий обміняти!"></div>
+        <div class="input-group"><label>Яку виручку отримає продавець ($):</label><input type="number" id="buyer-cash" placeholder="Сума угоди"></div>
         <div class="input-group">
-            <label>Ваш Лист продавцю (пропозиція чи відгук):</label>
-            <input type="text" id="buyer-note" placeholder="Наприклад: Готовий обміняти! Все швидко.">
+            <label>Поставити оцінку продавцю:</label>
+            <div class="rating-stars" id="modal-stars">
+                <span class="star active" onclick="setModalRating(1)">★</span><span class="star active" onclick="setModalRating(2)">★</span><span class="star active" onclick="setModalRating(3)">★</span><span class="star active" onclick="setModalRating(4)">★</span><span class="star active" onclick="setModalRating(5)">★</span>
+            </div>
         </div>
-
-        <div class="input-group">
-            <label>Яку виручку отримає продавець ($):</label>
-            <input type="number" id="buyer-cash" placeholder="Сума угоди, наприклад: 500" min="0">
+        <div style="display: flex; gap: 10px; margin-top: 10px;">
+            <button class="main-btn" style="background: #ff9100;" onclick="submitBuyerTrade()">Надіслати Трейд</button>
+            <button class="main-btn" style="background: #444; color: #fff;" onclick="closeModal()">Скасувати</button>
         </div>
+    </div>
+</div>
 
-        <div class="input-group">
-            <label>Поставити оцінку продавцю (Зірочки):</label>
+<script>
+    const itemsOptionsHTML = `
+        <option value="">[Порожньо]</option>
+        <optgroup label="⚡ ГЕЙМПАСИ">
+            <option value="Dark Blade 🗡️">Dark Blade 🗡️</option>
+            <option value="Fruit Notifier 🚨">Fruit Notifier 🚨</option>
+            <option value="2x Money 💰">2x Money 💰</option>
+            <option value="2x Mastery ✨">2x Mastery ✨</option>
+            <option value="2x Drop Chance 🍀">2x Drop Chance 🍀</option>
+

@@ -3,30 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BF Trade Pro 2026</title>
+    <title>BF Trade Бесконечно Рабочий</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-        /* Бесконечная прокрутка вниз */
-        body { background-color: #121214; color: #ffffff; padding: 15px; overflow-y: auto !important; }
-        .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; padding-bottom: 120px; }
         
-        /* ДИСКОРД ЧАТ */
+        /* РАЗРЕШАЕМ БЕСКОНЕЧНЫЙ СКРОЛЛ ВНИЗ */
+        html, body { height: auto !important; overflow-y: auto !important; background-color: #121214; color: #ffffff; }
+        body { padding: 15px; }
+        
+        .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; padding-bottom: 250px; }
+        
+        /* ДИСКОРД ЧАТ СВЕРХУ */
         .discord-container { background: #2f3136; border: 2px solid #5865f2; border-radius: 12px; padding: 15px; width: 100%; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(88,101,242,0.2); }
         .discord-header { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #40444b; padding-bottom: 8px; }
         .discord-avatar { width: 35px; height: 35px; background: #5865f2; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; }
         .discord-status { font-size: 14px; color: #ffffff; font-weight: bold; }
         .discord-status span { color: #3ba55d; font-size: 11px; margin-left: 5px; }
+        
         .discord-chat-wall { background: #36393f; border-radius: 8px; padding: 12px; height: 160px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .msg-line { display: flex; flex-direction: column; gap: 2px; font-size: 14px; }
+        .msg-line { display: flex; flex-direction: column; gap: 2px; font-size: 14px; line-height: 1.4; }
         .msg-author { font-weight: bold; font-size: 13px; }
         .msg-bot { color: #5865f2; }
         .msg-you { color: #00e676; }
         .msg-text { background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 6px; display: inline-block; max-width: 90%; }
+        
         .discord-input-form { display: flex; gap: 8px; width: 100%; }
         .discord-input { flex: 1; background: #40444b; color: #fff; border: 1px solid #202225; padding: 12px; border-radius: 8px; font-size: 14px; outline: none; }
-        .discord-send-btn { background: #5865f2; color: #fff; border: none; padding: 0 20px; font-weight: bold; border-radius: 8px; cursor: pointer; }
+        .discord-send-btn { background: #5865f2; color: #fff; border: none; padding: 0 20px; font-weight: bold; border-radius: 8px; cursor: pointer; font-size: 14px; }
 
-        /* БЛОКИ И ПОЛЯ СЛОТОВ */
+        /* КАРТОЧКИ ФОРМЫ */
         .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; width: 100%; }
         h1 { color: #00e676; font-size: 22px; text-align: center; margin-bottom: 5px; }
         .info-inputs { display: flex; gap: 10px; margin-bottom: 15px; }
@@ -46,7 +51,7 @@
         .delete-btn { background: #ff5252; color: #fff; padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; margin-top: 10px; display: inline-block; }
         .open-chat-btn { background: #5865f2; color: #fff; padding: 10px 18px; font-size: 13px; font-weight: bold; border-radius: 6px; border: none; cursor: pointer; margin-top: 8px; display: inline-block; text-decoration: none; }
 
-        /* БЕСКОНЕЧНАЯ ЛЕНТА ВНИЗУ */
+        /* РЫНОК В САМОМ НИЗУ */
         .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
         .market-item { background: #222227; padding: 12px; border-radius: 8px; margin-bottom: 5px; border-left: 5px solid #ff9100; }
         .market-header { display: flex; justify-content: space-between; font-size: 13px; color: #aaa; margin-bottom: 6px; border-bottom: 1px solid #333; padding-bottom: 4px; }
@@ -75,7 +80,7 @@
             localStorage.setItem('bf_user_time', time);
 
             let currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            let targetUrl = currentUrl + "?v=29&has_offer=1&nick=" + encodeURIComponent(nick) + "&time=" + encodeURIComponent(time) +
+            let targetUrl = currentUrl + "?v=31&has_offer=1&nick=" + encodeURIComponent(nick) + "&time=" + encodeURIComponent(time) +
                             "&g1=" + encodeURIComponent(g1) + "&g2=" + encodeURIComponent(g2) + "&g3=" + encodeURIComponent(g3) + "&g4=" + encodeURIComponent(g4) +
                             "&gt1=" + encodeURIComponent(gt1) + "&gt2=" + encodeURIComponent(gt2) + "&gt3=" + encodeURIComponent(gt3) + "&gt4=" + encodeURIComponent(gt4);
             
@@ -84,14 +89,13 @@
 
         function deleteMyOffer() {
             let currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            window.location.href = currentUrl + "?v=29";
+            window.location.href = currentUrl + "?v=31";
         }
 
         function openLSChat(sellerNick) {
-            // Перезагружает страницу и открывает чат конкретно с этим продавцом
             const params = new URLSearchParams(window.location.search);
             params.set('chat_with', sellerNick);
-            params.set('v', '29');
+            params.set('v', '31');
             window.location.href = window.location.pathname + '?' + params.toString() + '#discord-section';
         }
 
@@ -107,7 +111,7 @@
 
 <div class="container">
     
-    <!-- 1. ВЕРХНИЕ ПОЛЯ ИМЕНИ И ВРЕМЕНИ -->
+    <!-- ================= 1. САМЫЙ ВЕРХ: НИК И ВРЕМЯ ================= -->
     <div class="card">
         <div class="info-inputs">
             <div class="input-group"><label>Ваш никнейм в Roblox:</label><input type="text" id="roblox-nick" placeholder="Например, Trade_King"></div>
@@ -115,7 +119,7 @@
         </div>
     </div>
 
-    <!-- 2. ЛИЧНЫЙ ЧАТ DISCORD -->
+    <!-- ================= 2. ЛИЧНЫЙ ЧАТ DISCORD ================= -->
     <div class="discord-container" id="discord-section">
         <div class="discord-header">
             <div class="discord-avatar">💬</div>
@@ -124,9 +128,7 @@
                 <script>
                     const urlParamsName = new URLSearchParams(window.location.search);
                     const currentChatPartner = urlParamsName.get('chat_with');
-                    if (currentChatPartner) {
-                        document.getElementById('chat-target-name').innerText = currentChatPartner;
-                    }
+                    if (currentChatPartner) { document.getElementById('chat-target-name').innerText = currentChatPartner; }
                 </script>
             </div>
         </div>
@@ -135,8 +137,6 @@
             <script>
                 const chatParams = new URLSearchParams(window.location.search);
                 const partner = chatParams.get('chat_with') || "FruitTrader_2026";
-                
-                // Динамические сообщения в зависимости от того, кому ты кликнул написать
                 document.write(`
                     <div class="msg-line">
                         <span class="msg-author msg-bot">${partner}:</span>
@@ -154,3 +154,5 @@
                     `);
                 }
             </script>
+        </div>
+        

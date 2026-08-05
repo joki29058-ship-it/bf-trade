@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BF Trade Бесконечно Рабочий</title>
+    <title>BF Trade Pro 2026</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
         
-        /* РАЗРЕШАЕМ БЕСКОНЕЧНЫЙ СКРОЛЛ ВНИЗ */
+        /* РАЗРЕШАЕМ БЕСКОНЕЧНЫЙ СКРОЛЛ ВНИЗ НА ОДНОЙ СТРАНИЦЕ */
         html, body { height: auto !important; overflow-y: auto !important; background-color: #121214; color: #ffffff; }
         body { padding: 15px; }
         
@@ -59,6 +59,7 @@
     </style>
     
     <script>
+        // Железобетонная отправка формы с оффером без зависания скриптов
         function submitTradeManual() {
             let nick = document.getElementById('roblox-nick').value.trim() || "Игрок";
             let time = document.getElementById('online-time').value.trim() || "В сети";
@@ -80,7 +81,7 @@
             localStorage.setItem('bf_user_time', time);
 
             let currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            let targetUrl = currentUrl + "?v=31&has_offer=1&nick=" + encodeURIComponent(nick) + "&time=" + encodeURIComponent(time) +
+            let targetUrl = currentUrl + "?v=final&has_offer=1&nick=" + encodeURIComponent(nick) + "&time=" + encodeURIComponent(time) +
                             "&g1=" + encodeURIComponent(g1) + "&g2=" + encodeURIComponent(g2) + "&g3=" + encodeURIComponent(g3) + "&g4=" + encodeURIComponent(g4) +
                             "&gt1=" + encodeURIComponent(gt1) + "&gt2=" + encodeURIComponent(gt2) + "&gt3=" + encodeURIComponent(gt3) + "&gt4=" + encodeURIComponent(gt4);
             
@@ -89,13 +90,13 @@
 
         function deleteMyOffer() {
             let currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            window.location.href = currentUrl + "?v=31";
+            window.location.href = currentUrl + "?v=final";
         }
 
         function openLSChat(sellerNick) {
             const params = new URLSearchParams(window.location.search);
             params.set('chat_with', sellerNick);
-            params.set('v', '31');
+            params.set('v', 'final');
             window.location.href = window.location.pathname + '?' + params.toString() + '#discord-section';
         }
 
@@ -111,7 +112,7 @@
 
 <div class="container">
     
-    <!-- ================= 1. САМЫЙ ВЕРХ: НИК И ВРЕМЯ ================= -->
+    <!-- ================= 1. САМЫЙ ВЕРХ: ВВОД НИКА И ОНЛАЙНА ================= -->
     <div class="card">
         <div class="info-inputs">
             <div class="input-group"><label>Ваш никнейм в Roblox:</label><input type="text" id="roblox-nick" placeholder="Например, Trade_King"></div>
@@ -119,7 +120,7 @@
         </div>
     </div>
 
-    <!-- ================= 2. ЛИЧНЫЙ ЧАТ DISCORD ================= -->
+    <!-- ================= 2. ЛИЧНЫЙ ЧАТ DISCORD (ОТПРАВКА СМС БЕЗ БАГОВ) ================= -->
     <div class="discord-container" id="discord-section">
         <div class="discord-header">
             <div class="discord-avatar">💬</div>
@@ -150,9 +151,3 @@
                         <div class="msg-line">
                             <span class="msg-author msg-you">Вы:</span>
                             <span class="msg-text" style="background: rgba(0,230,118,0.1); border-left: 2px solid #00e676;">${replyText}</span>
-                        </div>
-                    `);
-                }
-            </script>
-        </div>
-        

@@ -2,47 +2,34 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>BF Trade Star 2026</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BF Trade Infinity 2026</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
-        body { background-color: #121214; color: #ffffff; overflow-y: hidden; }
+        /* ОБЫЧНАЯ ПРОКРУТКА ВНИЗ ДЛЯ ПЛАНШЕТА */
+        body { background-color: #121214; color: #ffffff; padding: 15px; overflow-y: auto !important; }
+        .container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; padding-bottom: 100px; }
         
-        .swipe-container { 
-            display: flex; 
-            width: 200vw; 
-            height: 100vh; 
-            overflow-x: scroll; 
-            scroll-snap-type: x mandatory;
-            -webkit-overflow-scrolling: touch;
-        }
-        .screen { 
-            width: 100vw; 
-            height: 100vh; 
-            scroll-snap-align: start; 
-            flex-shrink: 0; 
-            padding: 15px; 
-            overflow-y: auto; 
-        }
-        .swipe-hint { position: fixed; top: 0; left: 0; width: 100%; text-align: center; font-size: 13px; color: #00e676; z-index: 9999; font-weight: bold; background: rgba(0,0,0,0.9); padding: 6px 0; pointer-events: none; border-bottom: 1px solid #333; }
-
-        .discord-container { background: #2f3136; border: 2px solid #5865f2; border-radius: 12px; padding: 15px; width: 100%; display: flex; flex-direction: column; gap: 10px; }
+        /* ДИСКОРД ЧАТ */
+        .discord-container { background: #2f3136; border: 2px solid #5865f2; border-radius: 12px; padding: 15px; width: 100%; display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 15px rgba(88,101,242,0.2); }
         .discord-header { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #40444b; padding-bottom: 8px; }
         .discord-avatar { width: 35px; height: 35px; background: #5865f2; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px; }
         .discord-status { font-size: 14px; color: #ffffff; font-weight: bold; }
         .discord-status span { color: #3ba55d; font-size: 11px; margin-left: 5px; }
-        .discord-chat-wall { background: #36393f; border-radius: 8px; padding: 12px; height: 140px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .discord-chat-wall { background: #36393f; border-radius: 8px; padding: 12px; height: 150px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
         .msg-line { display: flex; flex-direction: column; gap: 2px; font-size: 14px; }
         .msg-author { font-weight: bold; font-size: 13px; }
         .msg-bot { color: #5865f2; }
         .msg-you { color: #00e676; }
-        .msg-text { background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 6px; display: inline-block; }
+        .msg-text { background: rgba(255,255,255,0.05); padding: 6px 10px; border-radius: 6px; display: inline-block; max-width: 90%; }
         .discord-input-form { display: flex; gap: 8px; width: 100%; }
         .discord-input { flex: 1; background: #40444b; color: #fff; border: 1px solid #202225; padding: 12px; border-radius: 8px; font-size: 14px; outline: none; }
         .discord-send-btn { background: #5865f2; color: #fff; border: none; padding: 0 20px; font-weight: bold; border-radius: 8px; cursor: pointer; }
 
+        /* БЛОКИ И ПОЛЯ СЛОТОВ */
         .card { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; width: 100%; }
-        .info-inputs { display: flex; gap: 10px; margin-bottom: 5px; }
+        h1 { color: #00e676; font-size: 22px; text-align: center; margin-bottom: 5px; }
+        .info-inputs { display: flex; gap: 10px; margin-bottom: 15px; }
         .input-group { flex: 1; display: flex; flex-direction: column; gap: 5px; }
         label { font-size: 12px; color: #aaa; font-weight: bold; }
         input[type="text"] { background: #2a2a32; color: #fff; border: 1px solid #444; padding: 14px; border-radius: 8px; font-size: 15px; outline: none; width: 100%; }
@@ -54,10 +41,12 @@
         .slot-row { display: flex; align-items: center; gap: 10px; background: #222227; padding: 6px 10px; border-radius: 8px; border: 1px solid #333; }
         .slot-row span { font-size: 13px; color: #888; font-weight: bold; width: 60px; }
 
+        /* КНОПКИ */
         .publish-btn { background: #00e676; color: #000; padding: 18px; font-size: 18px; font-weight: bold; border-radius: 8px; text-align: center; width: 100%; margin-top: 10px; border: none; display: block; cursor: pointer; user-select: none; }
         .delete-btn { background: #ff5252; color: #fff; padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; margin-top: 10px; display: inline-block; }
 
-        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 12px; min-height: 85vh; }
+        /* БЕСКОНЕЧНАЯ ЛЕНТА ВНИЗУ */
+        .chat-container { background: #1a1a1e; border: 1px solid #2d2d34; border-radius: 12px; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
         .market-item { background: #222227; padding: 12px; border-radius: 8px; margin-bottom: 5px; border-left: 5px solid #ff9100; }
         .market-header { display: flex; justify-content: space-between; font-size: 13px; color: #aaa; margin-bottom: 6px; border-bottom: 1px solid #333; padding-bottom: 4px; }
         .fruits-line { margin: 4px 0; font-size: 15px; }
@@ -85,7 +74,7 @@
             localStorage.setItem('bf_user_time', time);
 
             let currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            let targetUrl = currentUrl + "?v=27&has_offer=1&nick=" + encodeURIComponent(nick) + "&time=" + encodeURIComponent(time) +
+            let targetUrl = currentUrl + "?v=28&has_offer=1&nick=" + encodeURIComponent(nick) + "&time=" + encodeURIComponent(time) +
                             "&g1=" + encodeURIComponent(g1) + "&g2=" + encodeURIComponent(g2) + "&g3=" + encodeURIComponent(g3) + "&g4=" + encodeURIComponent(g4) +
                             "&gt1=" + encodeURIComponent(gt1) + "&gt2=" + encodeURIComponent(gt2) + "&gt3=" + encodeURIComponent(gt3) + "&gt4=" + encodeURIComponent(gt4);
             
@@ -94,7 +83,7 @@
 
         function deleteMyOffer() {
             let currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            window.location.href = currentUrl + "?v=27";
+            window.location.href = currentUrl + "?v=28";
         }
 
         window.onload = function() {
@@ -102,50 +91,56 @@
                 document.getElementById('roblox-nick').value = localStorage.getItem('bf_user_nick') || "";
                 document.getElementById('online-time').value = localStorage.getItem('bf_user_time') || "";
             }
-
-            const params = new URLSearchParams(window.location.search);
-            if (params.get('has_offer') === '1') {
-                let scroller = document.getElementById('master-scroller');
-                if (scroller) scroller.scrollTo({ left: 0, behavior: 'instant' });
-            }
         }
     </script>
 </head>
 <body>
 
-    <div class="swipe-hint">👉 СВАЙПНИ ЭКРАН ВЛЕВО-ВПРАВО ДЛЯ ПЕРЕКЛЮЧЕНИЯ СТРАНИЦ 👈</div>
+<div class="container">
+    
+    <!-- 1. ВЕРХНИЕ ПОЛЯ ИМЕНИ И ВРЕМЕНИ -->
+    <div class="card">
+        <div class="info-inputs">
+            <div class="input-group"><label>Ваш никнейм в Roblox:</label><input type="text" id="roblox-nick" placeholder="Например, Trade_King"></div>
+            <div class="input-group"><label>Когда вы свободны для обмена?</label><input type="text" id="online-time" placeholder="Например: Сейчас в сети"></div>
+        </div>
+    </div>
 
-    <div class="swipe-container" id="master-scroller">
+    <!-- 2. ОКНО ПЕРЕПИСКИ DISCORD С СТИРАНИЕМ ПАРАМЕТРОВ ОФФЕРА -->
+    <div class="discord-container" id="discord-section">
+        <div class="discord-header">
+            <div class="discord-avatar">💬</div>
+            <div class="discord-status">ЛС: FruitTrader_2026 <span>● онлайн</span></div>
+        </div>
         
-        <div class="screen">
-            <div style="margin-top: 35px; display: flex; flex-direction: column; gap: 15px;">
-                
-                <div class="card">
-                    <div class="info-inputs">
-                        <div class="input-group"><label>Ваш никнейм в Roblox:</label><input type="text" id="roblox-nick" placeholder="Например, Trade_King"></div>
-                        <div class="input-group"><label>Когда вы свободны для обмена?</label><input type="text" id="online-time" placeholder="Например: Сейчас в сети"></div>
-                    </div>
-                </div>
-
-                <div class="discord-container">
-                    <div class="discord-header">
-                        <div class="discord-avatar">💬</div>
-                        <div class="discord-status">ЛС: FruitTrader_2026 <span>● онлайн</span></div>
-                    </div>
-                    <div class="discord-chat-wall">
-                        <div class="msg-line"><span class="msg-author msg-bot">FruitTrader_2026:</span><span class="msg-text">Привет! За сколько отдашь Kitsune? 🦊</span></div>
-                        <div class="msg-line"><span class="msg-author msg-bot">FruitTrader_2026:</span><span class="msg-text">Могу предложить взамен геймпас 2x Money 💰 и Dragon Rework! Го обмен?</span></div>
-                        <script>
-                            const chatParams = new URLSearchParams(window.location.search);
-                            const replyText = chatParams.get('discord_msg');
-                            if (replyText) {
-                                document.write(`<div class="msg-line"><span class="msg-author msg-you">Вы (Трейдер):</span><span class="msg-text" style="background: rgba(0,230,118,0.1); border-left: 2px solid #00e676;">${replyText}</span></div>`);
-                            }
-                        </script>
-                    </div>
-                    <form method="GET" class="discord-input-form">
-                        <script>
-                            const uParams = new URLSearchParams(window.location.search);
-                            if(uParams.get('has_offer')) {
-                                document.write(`
-                                    <input type="hidden" name="v" value="27"><input type="hidden" name="has_offer" value="1">
+        <div class="discord-chat-wall">
+            <div class="msg-line"><span class="msg-author msg-bot">FruitTrader_2026:</span><span class="msg-text">Привет! За сколько отдашь Kitsune? 🦊</span></div>
+            <div class="msg-line"><span class="msg-author msg-bot">FruitTrader_2026:</span><span class="msg-text">Могу предложить взамен геймпас 2x Money 💰 и Dragon Rework! Го обмен?</span></div>
+            
+            <script>
+                const chatParams = new URLSearchParams(window.location.search);
+                const replyText = chatParams.get('discord_msg');
+                if (replyText) {
+                    document.write(`
+                        <div class="msg-line">
+                            <span class="msg-author msg-you">Вы (Трейдер):</span>
+                            <span class="msg-text" style="background: rgba(0,230,118,0.1); border-left: 2px solid #00e676;">${replyText}</span>
+                        </div>
+                    `);
+                }
+            </script>
+        </div>
+        
+        <form method="GET" class="discord-input-form">
+            <!-- Скрытые параметры сохраняют твой трейд при отправке СМС боту -->
+            <script>
+                const uParams = new URLSearchParams(window.location.search);
+                if(uParams.get('has_offer')) {
+                    document.write(`
+                        <input type="hidden" name="v" value="28"><input type="hidden" name="has_offer" value="1">
+                        <input type="hidden" name="nick" value="${uParams.get('nick')}"><input type="hidden" name="time" value="${uParams.get('time')}">
+                        <input type="hidden" name="g1" value="${uParams.get('g1')}"><input type="hidden" name="g2" value="${uParams.get('g2')}"><input type="hidden" name="g3" value="${uParams.get('g3')}"><input type="hidden" name="g4" value="${uParams.get('g4')}">
+                        <input type="hidden" name="gt1" value="${uParams.get('gt1')}"><input type="hidden" name="gt2" value="${uParams.get('gt2')}"><input type="hidden" name="gt3" value="${uParams.get('gt3')}"><input type="hidden" name="gt4" value="${uParams.get('gt4')}">
+                    `);
+                }
+            </script>
